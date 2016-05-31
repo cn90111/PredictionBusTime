@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PredictionBusTime</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="input_route_ID">請選擇要查找的路線ID</string>
+    <string name="determine">確定</string>
+    <string name="reservation">預約</string>
+    <string name="title_activity_search_route_by_id_layout">a</string>
+    <string name="title_activity_print_search_by_id_result">b</string>
+    <string name="search_result_title">你查詢的路線是</string>
+    <string name="bus_state">公車狀態</string>
+    <string name="bus_arrivals_time">到達時間</string>
+    <string name="station_name">站名</string>
+    <string name="sign_in">登入</string>
+    <string name="uuid">UUID</string>
+    <string name="password">密碼</string>
+    <string name="phone_number">電話號碼</string>
+    <string name="send">送出</string>
+    <string name="return_activity">返回</string>
+    <string name="registered">註冊</string>
+    <string name="reInputPassword">請輸入舊密碼</string>
+    <string name="inputNewPassword">輸入要更改的新密碼</string>
+    <string name="reInputNewPassword">再次輸入新密碼</string>
+    
+    <string name="inputRegisterData">請輸入註冊資料</string>
+    <string name="dataCanNotNull">資料不能為空</string>
+    <string name="registeredSuccess">註冊成功</string>
+    
+    
+    <string-array name="can_run_route">
+        <item>33</item>
+        <item>160</item>
+    </string-array>
+    <string-array name="menu">
+        <item>選單</item>
+        <item>登出</item>
+        <item>更改密碼</item>
+        <item>刪除帳號</item>
+    </string-array>
+    <string-array name="id_33_route">
+        <item>文修停車場</item>
+        <item>西苑高中</item>
+        <item>僑光科技大學</item>
+        <item>漢翔公司(星享道)</item>
+        <item>福星停車場</item>
+        <item>河南崇義街口</item>
+        <item>河南青海路口</item>
+        <item>教師新村</item>
+        <item>新光三越</item>
+        <item>文心四川路口</item>
+        <item>文心西屯路口</item>
+        <item>文心甘肅路口</item>
+        <item>文華高中(文心路)</item>
+        <item>文心河南路口</item>
+        <item>重慶國小</item>
+        <item>臺灣日報</item>
+        <item>文心陜西路口</item>
+        <item>頂賴厝</item>
+        <item>天津路商圈</item>
+        <item>曉明女中(中清路)</item>
+        <item>中清漢口路口</item>
+        <item>中清太原路口</item>
+        <item>大道公廟(進化北路)</item>
+        <item>衛道新世界</item>
+        <item>進化北永興街口</item>
+        <item>頂厝里</item>
+        <item>稅務新村</item>
+        <item>北屯市場</item>
+        <item>進化天祥街口</item>
+        <item>進化國瑞街口</item>
+        <item>進化興進路口</item>
+        <item>進化力行路口</item>
+        <item>合作市場</item>
+        <item>進德國小</item>
+        <item>中國醫東區分院</item>
+        <item>明功堂醫院</item>
+        <item>自由富台東街口</item>
+        <item>立體停車場(自由路)</item>
+        <item>干城站</item>
+        <item>臺中火車站</item>
+        <item>臺中酒廠(復興路)</item>
+        <item>文化創意園區</item>
+        <item>林祖厝</item>
+        <item>醒修宮</item>
+        <item>恩光堂</item>
+        <item>國光國小</item>
+        <item>中興大學(興大路)</item>
+        <item>美村五權南路口</item>
+        <item>信義國小(美村路)</item>
+        <item>美村南忠明南路口</item>
+        <item>南和里</item>
+        <item>僑泰中學(美村南路)</item>
+        <item>工學一街口</item>
+        <item>臺中高工(高工路)</item>
+        <item>高工文心南路口</item>
+        <item>復興大慶街口</item>
+        <item>勤工派出所</item>
+        <item>復興環中路口</item>
+        <item>樹仔腳</item>
+        <item>九張犁</item>
+        <item>明道花園城</item>
+        <item>明道中學</item>
+        <item>烏日橋</item>
+        <item>五光新興路口</item>
+        <item>五光公園三街口</item>
+        <item>公園五光路口</item>
+        <item>公園光日路口</item>
+        <item>烏日區公所(新興路)</item>
+        <item>烏日(新興路)</item>
+        <item>烏日國中(新興路)</item>
+        <item>高鐵臺中站</item>
+    </string-array>
+    <string-array name="id_160_route">
+        <item>高鐵臺中站</item>
+        <item>環中向上路口</item>
+        <item>向上永春東七路口</item>
+        <item>黎明新村(黎明路)</item>
+        <item>朝馬轉運站(朝富路)</item>
+        <item>河南青海路口</item>
+        <item>逢甲大學(福興路)</item>
+        <item>僑光科技大學</item>
+        <item>文修停車場</item>
+    </string-array>
+
+    <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="title_activity_registered">RegisteredActivity</string>
+    <string name="title_activity_change_password">ChangePasswordActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_change_password_main">ChangePasswordMainActivity</string>
+
+</resources>
