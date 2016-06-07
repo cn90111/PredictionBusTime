@@ -22,12 +22,10 @@
     <string name="reInputPassword">請輸入舊密碼</string>
     <string name="inputNewPassword">輸入要更改的新密碼</string>
     <string name="reInputNewPassword">再次輸入新密碼</string>
-    
     <string name="explanation">操作說明</string>
     <string name="explanationContent01">1.請藉由點擊站名來做預約公車動作，先點擊上車站再點擊下車站，即可完成預約</string>
     <string name="explanationContent02">2.若是想使用預約功能，記得先登入帳號，讓我們確定您的身分</string>
     <string name="explanationContent03">3.若是預約公車後太多次沒到，我們將會藉由您的帳號對您發出懲罰，請勿隨便預約</string>
-    
     <string name="inputRegisterData">請輸入註冊資料</string>
     <string name="dataCanNotNull">資料不能為空</string>
     <string name="registeredSuccess">註冊成功</string>
@@ -133,5 +131,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_change_password_main">ChangePasswordMainActivity</string>
     <string name="title_activity_explanation">ExplanationActivity</string>
+    <string name="title_activity_change_main">ChangeMainActivity</string>
 
 </resources>

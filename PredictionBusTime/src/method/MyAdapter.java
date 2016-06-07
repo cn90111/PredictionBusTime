@@ -1,6 +1,11 @@
-package com.example.predictionbustime;
+package method;
 
 import java.util.List;
+
+import com.example.predictionbustime.BusDetail;
+import com.example.predictionbustime.R;
+import com.example.predictionbustime.R.id;
+import com.example.predictionbustime.R.layout;
 
 import android.content.Context;
 import android.graphics.Color;

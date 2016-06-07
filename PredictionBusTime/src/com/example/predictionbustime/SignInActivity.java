@@ -1,5 +1,6 @@
 package com.example.predictionbustime;
 
+import chara.User;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ public class SignInActivity extends Activity
 	EditText uuidEdit;
 	EditText passwordEdit;
 	Button sendButton,registeredButton,returnButton;
+	
+	User user = User.getUniqueUser();
 	
 	private final static int REQUEST_CODE = 0;
 	
@@ -52,11 +55,12 @@ public class SignInActivity extends Activity
 				else
 				{
 
-					Bundle bundle = new Bundle();
-					bundle.putString("UUID", uuidEdit.getText().toString());
-					Intent intent = new Intent();
-					intent.putExtras(bundle);
-					setResult(RESULT_OK, intent);
+//					Bundle bundle = new Bundle();
+//					bundle.putString("UUID", uuidEdit.getText().toString());
+//					Intent intent = new Intent();
+//					intent.putExtras(bundle);
+//					setResult(RESULT_OK, intent);
+					user.setUUID(uuidEdit.getText().toString());
 				    finish();
 				}
 			}

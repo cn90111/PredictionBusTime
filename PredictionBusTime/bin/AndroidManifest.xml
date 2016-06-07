@@ -74,6 +74,10 @@
             android:name=".ExplanationActivity"
             android:label="@string/title_activity_explanation" >
         </activity>
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:label="@string/title_activity_change_main" >
+        </activity>
     </application>
 
 </manifest>

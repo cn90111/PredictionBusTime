@@ -45,9 +45,9 @@ public class SearchRouteByIdLayout extends Activity
 		listAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,list);
 		spinnerBusID.setAdapter(listAdapter);
 		
-		Intent intent = this.getIntent();
-		Bundle bundle = intent.getExtras();
-		user.setUUID(bundle.getString("UUID"));
+//		Intent intent = this.getIntent();
+//		Bundle bundle = intent.getExtras();
+//		user.setUUID(bundle.getString("UUID"));
 		
 		list = getResources().getStringArray(R.array.menu);
 		listAdapter = new ArrayAdapter(this,
@@ -101,7 +101,7 @@ public class SearchRouteByIdLayout extends Activity
 				intent.setClass(SearchRouteByIdLayout.this, PrintSearchByIdResult.class);
 				Bundle bundle = new Bundle();
 				bundle.putString("Route", spinnerBusID.getSelectedItem().toString());
-				bundle.putString("UUID", user.getUUID());
+//				bundle.putString("UUID", user.getUUID());
 				intent.putExtras(bundle);
 				startActivity(intent);
 			}
@@ -116,7 +116,8 @@ public class SearchRouteByIdLayout extends Activity
 				// TODO Auto-generated method stub
 				Intent intent = new Intent();
 				intent.setClass(SearchRouteByIdLayout.this, SignInActivity.class);
-				startActivityForResult(intent,REQUEST_CODE);
+				startActivity(intent);
+//				startActivityForResult(intent,REQUEST_CODE);
 			}
 		});
 		
@@ -132,24 +133,24 @@ public class SearchRouteByIdLayout extends Activity
 		});
 	}
 	
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-
-		
-		if (requestCode == REQUEST_CODE)
-		{
-			if (resultCode == RESULT_OK)
-			{
-				Bundle extras = data.getExtras();
-				if (extras != null)
-				{
-					user.setUUID(extras.getString("UUID"));
-					signButton.setVisibility(View.GONE);
-					menuSpinner.setVisibility(View.VISIBLE);
-				}
-			}
-		}
-	}
+//	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+//	{
+//		// TODO Auto-generated method stub
+//		super.onActivityResult(requestCode, resultCode, data);
+//
+//		
+//		if (requestCode == REQUEST_CODE)
+//		{
+//			if (resultCode == RESULT_OK)
+//			{
+//				Bundle extras = data.getExtras();
+//				if (extras != null)
+//				{
+//					user.setUUID(extras.getString("UUID"));
+//					signButton.setVisibility(View.GONE);
+//					menuSpinner.setVisibility(View.VISIBLE);
+//				}
+//			}
+//		}
+//	}
 }

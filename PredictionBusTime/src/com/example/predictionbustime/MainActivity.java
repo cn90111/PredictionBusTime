@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -45,10 +46,56 @@ public class MainActivity extends Activity
 		listAdapter = new ArrayAdapter(this,
 				android.R.layout.simple_spinner_item, list);
 		menuSpinner.setAdapter(listAdapter);
-		menuSpinner.setOnItemSelectedListener(
-				new MenuSpinnerListener(signButton,menuSpinner,user));
 		
+//		menuSpinner.setOnItemSelectedListener(
+//				new MenuSpinnerListener(signButton,menuSpinner,user));
 		
+		menuSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() 
+		{
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					final int position, long id) 
+			{
+				// TODO Auto-generated method stub
+				switch(parent.getSelectedItem().toString())
+				{
+					case "登出":
+						System.out.println("登出");
+						signButton.setVisibility(View.VISIBLE);
+						menuSpinner.setVisibility(View.GONE);
+						menuSpinner.setSelection(0);
+						user.setUUID("");
+						break;
+
+					case "更改密碼":
+						System.out.println("更改密碼");
+						Intent intent = new Intent();	
+						intent.setClass(MainActivity.this, ChangePasswordActivity.class);
+//						Bundle bundle = new Bundle();
+//					    bundle.putString("UUID", user.getUUID());
+//					    intent.putExtras(bundle);
+						startActivity(intent);
+						break;
+
+					case "刪除帳號":
+						System.out.println("刪除帳號");
+						break;
+						
+					default:
+						System.out.println("程式錯誤");
+						Log.e("error","MenuSpinnerListener,程式錯誤");
+						break;
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 
 	}
 
@@ -79,9 +126,9 @@ public class MainActivity extends Activity
 
 				Intent intent = new Intent();	
 				intent.setClass(MainActivity.this, SearchRouteByIdLayout.class);
-				Bundle bundle = new Bundle();
-			    bundle.putString("UUID", user.getUUID());
-			    intent.putExtras(bundle);
+//				Bundle bundle = new Bundle();
+//			    bundle.putString("UUID", user.getUUID());
+//			    intent.putExtras(bundle);
 				startActivity(intent);
 			}
 		});
@@ -95,7 +142,8 @@ public class MainActivity extends Activity
 				// TODO Auto-generated method stub
 				Intent intent = new Intent();
 				intent.setClass(MainActivity.this, SignInActivity.class);
-				startActivityForResult(intent,REQUEST_CODE);
+				startActivity(intent);
+//				startActivityForResult(intent,REQUEST_CODE);
 			}
 		});
 		
@@ -122,24 +170,24 @@ public class MainActivity extends Activity
 		msgToast.show();
 	}
 
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-
-		
-		if (requestCode == REQUEST_CODE)
-		{
-			if (resultCode == RESULT_OK)
-			{
-				Bundle extras = data.getExtras();
-				if (extras != null)
-				{
-					user.setUUID(extras.getString("UUID"));
-					signButton.setVisibility(View.GONE);
-					menuSpinner.setVisibility(View.VISIBLE);
-				}
-			}
-		}
-	}
+//	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+//	{
+//		// TODO Auto-generated method stub
+//		super.onActivityResult(requestCode, resultCode, data);
+//
+//		
+//		if (requestCode == REQUEST_CODE)
+//		{
+//			if (resultCode == RESULT_OK)
+//			{
+//				Bundle extras = data.getExtras();
+//				if (extras != null)
+//				{
+//					user.setUUID(extras.getString("UUID"));
+//					signButton.setVisibility(View.GONE);
+//					menuSpinner.setVisibility(View.VISIBLE);
+//				}
+//			}
+//		}
+//	}
 }

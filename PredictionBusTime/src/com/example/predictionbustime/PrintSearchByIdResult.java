@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import method.MenuSpinnerListener;
+import method.MyAdapter;
 import network.SendPostThread;
 import refresh.RefreshPrintThread;
 
@@ -100,7 +101,7 @@ public class PrintSearchByIdResult extends Activity
 		refreshPrintThread = new RefreshPrintThread(runHandle);
 
 		routeNumber = bundle.getString("Route");
-		user.setUUID(bundle.getString("UUID"));
+//		user.setUUID(bundle.getString("UUID"));
 		printSearchTitle.setText("" + routeNumber + "號線");
 		
 		list = getResources().getStringArray(R.array.menu);

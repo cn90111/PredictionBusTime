@@ -509,6 +509,7 @@ int string search_result_title 0x7f0a0017
 int string send 0x7f0a001f
 int string sign_in 0x7f0a001b
 int string station_name 0x7f0a001a
+int string title_activity_change_main 0x7f0a0032
 int string title_activity_change_password 0x7f0a002e
 int string title_activity_change_password_main 0x7f0a0030
 int string title_activity_explanation 0x7f0a0031
