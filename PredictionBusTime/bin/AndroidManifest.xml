@@ -44,31 +44,35 @@
         </activity>
         <activity
             android:name=".SignInActivity"
-            android:label="@string/title_activity_sign_in" 
+            android:label="@string/title_activity_sign_in"
             android:screenOrientation="portrait" >
 
             <!-- 鎖定螢幕，portrait是直立 -->
         </activity>
         <activity
             android:name=".RegisteredActivity"
-            android:label="@string/title_activity_registered" 
+            android:label="@string/title_activity_registered"
             android:screenOrientation="portrait" >
 
             <!-- 鎖定螢幕，portrait是直立 -->
         </activity>
         <activity
             android:name=".ChangePasswordActivity"
-            android:label="@string/title_activity_change_password" 
+            android:label="@string/title_activity_change_password"
             android:screenOrientation="portrait" >
 
             <!-- 鎖定螢幕，portrait是直立 -->
         </activity>
         <activity
             android:name=".ChangePasswordMainActivity"
-            android:label="@string/title_activity_change_password_main" 
+            android:label="@string/title_activity_change_password_main"
             android:screenOrientation="portrait" >
 
             <!-- 鎖定螢幕，portrait是直立 -->
+        </activity>
+        <activity
+            android:name=".ExplanationActivity"
+            android:label="@string/title_activity_explanation" >
         </activity>
     </application>
 

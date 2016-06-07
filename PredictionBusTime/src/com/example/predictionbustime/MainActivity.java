@@ -20,6 +20,7 @@ public class MainActivity extends Activity
 {
 	Button searchBusByIDButton;
 	Button signButton;
+	Button explanationButton;
 
 	Spinner menuSpinner;
 	ArrayAdapter<String> listAdapter;
@@ -37,6 +38,7 @@ public class MainActivity extends Activity
 
 		searchBusByIDButton = (Button) findViewById(R.id.searchBusByID);
 		signButton = (Button) findViewById(R.id.signButton);
+		explanationButton = (Button) findViewById(R.id.explanationButton);
 		menuSpinner = (Spinner) findViewById(R.id.menuSpinner);
 
 		list = getResources().getStringArray(R.array.menu);
@@ -94,6 +96,19 @@ public class MainActivity extends Activity
 				Intent intent = new Intent();
 				intent.setClass(MainActivity.this, SignInActivity.class);
 				startActivityForResult(intent,REQUEST_CODE);
+			}
+		});
+		
+		explanationButton.setOnClickListener(new OnClickListener()
+		{
+			
+			@Override
+			public void onClick(View v)
+			{
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();	
+				intent.setClass(MainActivity.this, ExplanationActivity.class);
+				startActivity(intent);
 			}
 		});
 	}
