@@ -3,7 +3,6 @@ package method;
 import chara.User;
 
 import com.example.predictionbustime.MainActivity;
-import com.example.predictionbustime.R;
 import com.example.predictionbustime.SearchRouteByIdLayout;
 
 import android.content.Intent;
