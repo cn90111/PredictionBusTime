@@ -21,29 +21,18 @@
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <Button
-                android:id="@+id/switchButton"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:text="Button" />
-
-            <Button
                 android:id="@+id/signButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/switchButton"
+                android:layout_alignParentRight="true"
                 android:text="@string/sign_in" />
-            
+
             <Spinner
                 android:id="@+id/menuSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/switchButton"/>
-
+                android:layout_alignParentRight="true"
+                android:layout_weight="1" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -54,37 +43,63 @@
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:text="@string/station_name"
-       			android:layout_alignParentLeft="true"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:text="@string/bus_arrivals_time"
-                android:textAppearance="?android:attr/textAppearanceMedium" 
-	    		android:layout_centerInParent="true"/>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:text="@string/bus_state"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-        		android:layout_alignParentRight="true" />
-
+                android:textAppearance="?android:attr/textAppearanceMedium" />
         </RelativeLayout>
 
         <ListView
             android:id="@+id/busDataListView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:divider="#00ffffff" 
+            android:layout_height="358dp"
+            android:layout_weight="1.32"
+            android:divider="#00ffffff"
             android:dividerHeight="10dp"
-            android:padding="2dp">
+            android:padding="2dp" >
         </ListView>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/reservationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="開始預約"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/returnButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/return_activity"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/switchButton"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="15sp" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

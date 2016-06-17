@@ -44,7 +44,7 @@ public class MainActivity extends Activity
 
 		list = getResources().getStringArray(R.array.menu);
 		listAdapter = new ArrayAdapter(this,
-				android.R.layout.simple_spinner_item, list);
+				R.layout.myspinner, list);
 		menuSpinner.setAdapter(listAdapter);
 		
 //		menuSpinner.setOnItemSelectedListener(

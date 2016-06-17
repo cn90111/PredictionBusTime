@@ -1,45 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">PredictionBusTime</string>
+    <string name="app_name">iBus智慧公車</string>
     <string name="hello_world">Hello world!</string>
-    <string name="input_route_ID">請選擇要查找的路線ID</string>
+    
     <string name="determine">確定</string>
     <string name="reservation">預約</string>
-    <string name="title_activity_search_route_by_id_layout">a</string>
-    <string name="title_activity_print_search_by_id_result">b</string>
+    <string name="sign_in">登入</string>
+    <string name="send">送出</string>
+    <string name="return_activity">返回</string>
+    <string name="registered">註冊</string>
+    <string name="previous">上一頁</string>
+    <string name="next_page">下一頁</string>
+    
+    <string name="input_route_ID">請點選下拉式選單\n選擇要查找的路線ID</string>
     <string name="search_result_title">你查詢的路線是</string>
     <string name="bus_state">公車狀態</string>
     <string name="bus_arrivals_time">到達時間</string>
     <string name="station_name">站名</string>
-    <string name="sign_in">登入</string>
     <string name="uuid">UUID</string>
     <string name="password">密碼</string>
     <string name="phone_number">電話號碼</string>
-    <string name="send">送出</string>
-    <string name="return_activity">返回</string>
-    <string name="registered">註冊</string>
     <string name="reInputPassword">請輸入舊密碼</string>
     <string name="inputNewPassword">輸入要更改的新密碼</string>
     <string name="reInputNewPassword">再次輸入新密碼</string>
-    <string name="explanation">操作說明</string>
-    <string name="explanationContent01">1.請藉由點擊站名來做預約公車動作，先點擊上車站再點擊下車站，即可完成預約</string>
-    <string name="explanationContent02">2.若是想使用預約功能，記得先登入帳號，讓我們確定您的身分</string>
-    <string name="explanationContent03">3.若是預約公車後太多次沒到，我們將會藉由您的帳號對您發出懲罰，請勿隨便預約</string>
+     
     <string name="inputRegisterData">請輸入註冊資料</string>
     <string name="dataCanNotNull">資料不能為空</string>
     <string name="registeredSuccess">註冊成功</string>
-
+    
+   
+    <string name="explanation">操作說明</string>
+    <string-array name="explanationContent1">
+        <item>預約功能</item>
+        <item>1.若是想使用預約功能，除了開啟預約按鈕外，記得也要登入帳號，讓我們確定您的身分</item>
+        <item>2.請藉由點擊站名來做預約公車動作，先點擊上車站再點擊下車站，即可完成預約</item>
+        <item>3.若是預約公車後太多次沒到，我們將會藉由您的帳號對您發出懲罰，請勿隨便預約</item>
+    </string-array>    
+    <string-array name="explanationContent2">
+        <item>取消/更改預約</item>
+        <item>1.取消預約的按鈕會在預約後才會出現</item>
+        <item>2.按下取消預約按鈕並確定，我們便會將前一次的預約請求刪除</item>
+        <item>3.要更改前一次的預約，請刪除後重新點選啟動預約的按鈕</item>
+    </string-array>
+    <string-array name="explanationContent3">
+        <item>關於顏色</item>
+        <item>1.顏色代表著公車離這個站牌還有多遠</item>
+        <item>2.依照彩虹顏色，我們顏色有紅橙黃綠四色，每色代表不同的時間意義</item>
+        <item>3.紅代表公車差一站就到、橙兩站，後面類推，綠是四站以上才會到，您還可以悠閒地做別的事情</item>
+    </string-array>
+    
     <string-array name="can_run_route">
         <item>33</item>
         <item>160</item>
     </string-array>
+    
     <string-array name="menu">
         <item>選單</item>
         <item>登出</item>
         <item>更改密碼</item>
         <item>刪除帳號</item>
     </string-array>
+    
     <string-array name="id_33_route">
         <item>文修停車場</item>
         <item>西苑高中</item>
@@ -125,6 +147,8 @@
         <item>文修停車場</item>
     </string-array>
 
+    <string name="title_activity_search_route_by_id_layout">SearchRouteByIdLayoutActivity</string>
+    <string name="title_activity_print_search_by_id_result">PrintSearchByIdResultActivity</string>
     <string name="title_activity_sign_in">SignInActivity</string>
     <string name="title_activity_registered">RegisteredActivity</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>

@@ -48,7 +48,7 @@ public class PrintSearchByIdResult extends Activity
 	public static final int TAKE_POST_RETURN_RESULT = 2;
 	
 	TextView printSearchTitle;
-	Button switchButton,signButton;
+	Button switchButton,signButton,reservationButton,returnButton;
 	Spinner menuSpinner;
 	String[] list;
 	ArrayAdapter<String> listAdapter2;
@@ -78,6 +78,8 @@ public class PrintSearchByIdResult extends Activity
 	
 	User user = User.getUniqueUser();
 	
+	boolean startReservation = false;
+	
 	private final static int REQUEST_CODE = 0;
 	
 	@Override
@@ -90,6 +92,8 @@ public class PrintSearchByIdResult extends Activity
 		listview = (ListView) findViewById(R.id.busDataListView);
 		switchButton = (Button) findViewById(R.id.switchButton);
 		signButton = (Button) findViewById(R.id.signButton);
+		reservationButton = (Button) findViewById(R.id.reservationButton);
+		returnButton = (Button) findViewById(R.id.returnButton);
 		menuSpinner = (Spinner) findViewById(R.id.menuSpinner);
 		
 		busDirection = BUS_FORWARD;
@@ -106,11 +110,58 @@ public class PrintSearchByIdResult extends Activity
 		
 		list = getResources().getStringArray(R.array.menu);
 		listAdapter2 = new ArrayAdapter(this,
-				android.R.layout.simple_spinner_item, list);
+				R.layout.myspinner, list);
 		menuSpinner.setAdapter(listAdapter2);
-		menuSpinner.setOnItemSelectedListener(
-				new MenuSpinnerListener(signButton,menuSpinner,user));
+//		menuSpinner.setOnItemSelectedListener(
+//				new MenuSpinnerListener(signButton,menuSpinner,user));
 
+		menuSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() 
+		{
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					final int position, long id) 
+			{
+				// TODO Auto-generated method stub
+				switch(parent.getSelectedItem().toString())
+				{
+					case "登出":
+						System.out.println("登出");
+						signButton.setVisibility(View.VISIBLE);
+						menuSpinner.setVisibility(View.GONE);
+						menuSpinner.setSelection(0);
+						user.setUUID("");
+						break;
+
+					case "更改密碼":
+						System.out.println("更改密碼");
+						Intent intent = new Intent();	
+						intent.setClass(PrintSearchByIdResult.this, ChangePasswordActivity.class);
+//						Bundle bundle = new Bundle();
+//					    bundle.putString("UUID", user.getUUID());
+//					    intent.putExtras(bundle);
+						startActivity(intent);
+						break;
+
+					case "刪除帳號":
+						System.out.println("刪除帳號");
+						break;
+						
+					default:
+						System.out.println("程式錯誤");
+						Log.e("error","MenuSpinnerListener,程式錯誤");
+						break;
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
 		switch (routeNumber)
 		{
 			case "33":
@@ -182,6 +233,41 @@ public class PrintSearchByIdResult extends Activity
 				Intent intent = new Intent();
 				intent.setClass(PrintSearchByIdResult.this, SignInActivity.class);
 				startActivityForResult(intent,REQUEST_CODE);
+			}
+		});
+		
+		reservationButton.setOnClickListener(new OnClickListener()
+		{
+			
+			@Override
+			public void onClick(View v)
+			{
+				// TODO Auto-generated method stub
+				if(startReservation == true)
+				{
+					startReservation = false;
+					reservationButton.setText("開始預約");
+					msgToast("取消之前所做的預約設定");
+					
+				}
+				else
+				{
+					startReservation = true;
+					reservationButton.setEnabled(false);;
+					Toast.makeText(PrintSearchByIdResult.this, 
+							"啟動預約功能,請您點擊要上車的起始站(直接點擊顯示時間的地方即可)", Toast.LENGTH_LONG).show();
+				}
+			}
+		});
+		
+		returnButton.setOnClickListener(new OnClickListener()
+		{
+			
+			@Override
+			public void onClick(View v)
+			{
+				// TODO Auto-generated method stub
+				finish();
 			}
 		});
 	}
@@ -257,55 +343,71 @@ public class PrintSearchByIdResult extends Activity
 				switch(listViewState)
 				{
 					case SELECT_START_STATION:
-						
-						if(user.getUUID().equals(""))
+						if(startReservation == true)
 						{
-							msgToast("要使用預約功能請先登入");
+							if(user.getUUID().equals(""))
+							{
+								msgToast("要使用預約功能請先登入");
+							}
+							else
+							{
+								if(endStationID != -1)
+								{
+									msgToast("前一次預約將被取消，開始進行新預約");
+									endStationID = -1;
+								}
+								
+								startStationID = position;
+								listViewState = SELECT_END_STATION;
+								msgToast("已選擇上車站，請選擇下車站");
+//								printSearchTitle.setText("請問要在哪站下車?");
+							}
 						}
 						else
 						{
-							if(endStationID != -1)
-							{
-								msgToast("前一次預約將被取消，開始進行新預約");
-								endStationID = -1;
-							}
-							
-							startStationID = position;
-							listViewState = SELECT_END_STATION;
-							msgToast("開始預約，已選擇上車站");
-							printSearchTitle.setText("請問要在哪站下車?");
+							msgToast("請開啟預約按鈕");
 						}
 						break;
 					case SELECT_END_STATION:
-						
-						if(user.getUUID().equals(""))
+						if(startReservation == true)
 						{
-							msgToast("要使用預約功能請先登入");
-							listViewState = SELECT_START_STATION;
-							printSearchTitle.setText("" + routeNumber + "號線");
-						}
-						else
-						{
-							if(startStationID > position)
+							if(user.getUUID().equals(""))
 							{
-								msgToast("請選擇上車站後的站");
-							}
-							else if(startStationID == position)
-							{
-								msgToast("取消預約程序");
+								msgToast("要使用預約功能請先登入");
 								listViewState = SELECT_START_STATION;
 								printSearchTitle.setText("" + routeNumber + "號線");
 							}
 							else
 							{
-								msgToast("預約請求已發出");
-								listViewState = SELECT_START_STATION;
-								printSearchTitle.setText("" + routeNumber + "號線");
-								endStationID = position;
-								reservation();
+								if(startStationID > position)
+								{
+									msgToast("請選擇上車站後的站");
+								}
+								else if(startStationID == position)
+								{
+									msgToast("取消預約程序");
+									listViewState = SELECT_START_STATION;
+									printSearchTitle.setText("" + routeNumber + "號線");
+								}
+								else
+								{
+									msgToast("預約請求已發出");
+									listViewState = SELECT_START_STATION;
+									printSearchTitle.setText("" + routeNumber + "號線");
+									endStationID = position;
+
+									reservationButton.setEnabled(true);
+									reservationButton.setText("取消預約");
+									
+									reservation();
+								}
 							}
 						}
-						
+						else
+						{
+							msgToast("請開啟預約按鈕");
+							listViewState = SELECT_START_STATION;
+						}
 						break;
 					default:
 						msgToast("系統錯誤，請聯絡工程師");						
