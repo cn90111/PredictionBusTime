@@ -15,13 +15,16 @@ public class BusDetail
 	private int minute;
 	private int goToStationType;
 	private int reservationStation;
+	private int busApartHowManyStation;
 	
-	public BusDetail(String station,int minute,int goToStationType,int reservationStation)
+	public BusDetail(String station,int minute,int goToStationType,
+						int reservationStation,int busApartHowManyStation)
 	{
 		setStation(station);
 		setMinute(minute);
 		setGoToStationType(goToStationType);
 		setReservationStation(reservationStation);
+		setBusApartHowManyStation(busApartHowManyStation);
 	}
 	
 	public void setStation(String station)
@@ -58,6 +61,15 @@ public class BusDetail
 	public int getReservationStation()
 	{
 		return reservationStation;
+	}
+	
+	public void setBusApartHowManyStation(int busApartHowManyStation)
+	{
+		this.busApartHowManyStation = busApartHowManyStation;
+	}
+	public int getBusApartHowManyStation()
+	{
+		return busApartHowManyStation;
 	}
 	
 	public String toString()

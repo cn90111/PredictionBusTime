@@ -22,9 +22,6 @@ public class MyAdapter extends BaseAdapter
 	
 	ViewHolder holder = null;
 	
-	int beforeNumber = -1;
-	int stationCount = -1;
-	
 	public MyAdapter(Context context, List<BusDetail> busDetailList)
 	{
 		myInflater = LayoutInflater.from(context);
@@ -69,31 +66,6 @@ public class MyAdapter extends BaseAdapter
 	{
 		// TODO Auto-generated method stub
 		return busDetailList.indexOf(getItem(position));
-	}
-		
-	public int getStationCount()
-	{
-		if(beforeNumber < 0)
-		{
-			beforeNumber = busDetail.getMinute();
-			stationCount = 1;
-		}
-		else
-		{
-			if(beforeNumber > busDetail.getMinute())
-			{
-				beforeNumber = busDetail.getMinute();
-				stationCount = 1;
-			}
-			else
-			{
-				beforeNumber = busDetail.getMinute();
-				stationCount++;
-				
-			}
-		}
-		
-		return stationCount;
 	}
 
 	@Override
@@ -156,7 +128,7 @@ public class MyAdapter extends BaseAdapter
         		break;
         }
         
-        switch(getStationCount())
+        switch(busDetail.getBusApartHowManyStation())
         {
         	case 1:
         		holder.background.setBackgroundColor(0xFFFF0000);

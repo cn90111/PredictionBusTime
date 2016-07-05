@@ -73,11 +73,17 @@ public class PrintSearchByIdResult extends Activity
 	boolean haveReservation = false;
 	int busDirection;
 	
+	//假資料
 	int fakeTime = 0;
 	
+	//預約
 	int listViewState = SELECT_START_STATION;
 	int startStationID = -1;
 	int endStationID = -1;
+	
+	//標記公車距站牌還有幾站所用
+	int previousArrivalTime = -1;
+	int busApartStationCount = -1;
 	
 	//B397A7F7
 	//BOBTEST01
@@ -271,12 +277,16 @@ public class PrintSearchByIdResult extends Activity
 	{
 		bus_list.clear();
 
+		previousArrivalTime = -1;
+		busApartStationCount = -1;
+		
 		for (int i = 0; i < mTestArray.length; i++)
 		{
 			bus_list.add(new BusDetail(mTestArray[i],
 					getNeedMinute(mTestArray[i]),
 					getGoToStationType(mTestArray[i]),
-					getReservationStation(i)));
+					getReservationStation(i),
+					getBusApartHowManyStation()));
 		}
 
 		switchButton.setText("往" + mTestArray[0]);
@@ -458,6 +468,26 @@ public class PrintSearchByIdResult extends Activity
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		if(previousArrivalTime < 0)
+		{
+			previousArrivalTime = time;
+			busApartStationCount = 1;
+		}
+		else
+		{
+			if(previousArrivalTime > time)
+			{
+				previousArrivalTime = time;
+				busApartStationCount = 1;
+			}
+			else
+			{
+				previousArrivalTime = time;
+				busApartStationCount++;
+				
+			}
+		}
 
 		return time;
 	}
@@ -504,6 +534,11 @@ public class PrintSearchByIdResult extends Activity
 	public int getReservationStation(int stationID)
 	{
 		return startEndStationArray[stationID];
+	}
+	
+	public int getBusApartHowManyStation()
+	{
+		return busApartStationCount;
 	}
 	
 	public JSONObject fakeData(String station,int fakeTime)
