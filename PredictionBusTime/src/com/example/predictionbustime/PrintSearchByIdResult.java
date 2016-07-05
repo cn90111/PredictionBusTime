@@ -178,14 +178,19 @@ public class PrintSearchByIdResult extends Activity
 				{
 				case BUS_FORWARD:
 					busDirection = BUS_INVERSE;
+//					myToast.msgToast("切換逆向");
 					break;
 				case BUS_INVERSE:
 					busDirection = BUS_FORWARD;
+//					myToast.msgToast("切換順向");
 					break;
 				default:
 					myToast.msgToast("busDirection error");
 					break;
 				}
+				
+				new MyFormula<String>().reverse(mTestArray);
+				new MyFormula<Integer>().reverse(startEndStationArray);
 
 				setListViewPrint();
 			}
@@ -265,13 +270,6 @@ public class PrintSearchByIdResult extends Activity
 	public void setListViewPrint()
 	{
 		bus_list.clear();
-
-		if (busDirection == BUS_INVERSE)
-		{
-			mTestArray = new MyFormula<String>().reverse(mTestArray);
-			startEndStationArray = new MyFormula<Integer>().reverse(startEndStationArray);
-			
-		}
 
 		for (int i = 0; i < mTestArray.length; i++)
 		{
@@ -597,16 +595,6 @@ public class PrintSearchByIdResult extends Activity
 						new JSONObject(fakeSearchResult[fakeTime][6]),
 						new JSONObject(fakeSearchResult[fakeTime][7]),
 						new JSONObject(fakeSearchResult[fakeTime][8])
-						
-//						new JSONObject(fakeSearchResult[4][0]),
-//						new JSONObject(fakeSearchResult[4][1]),
-//						new JSONObject(fakeSearchResult[4][2]),
-//						new JSONObject(fakeSearchResult[4][3]),
-//						new JSONObject(fakeSearchResult[4][4]),
-//						new JSONObject(fakeSearchResult[4][5]),
-//						new JSONObject(fakeSearchResult[4][6]),
-//						new JSONObject(fakeSearchResult[4][7]),
-//						new JSONObject(fakeSearchResult[5][8])
 				};
 			}
 			else

@@ -2,16 +2,15 @@ package method;
 
 public class MyFormula<T>
 {
-	public T[] reverse(T[] a)
+	public void reverse(T[] a)
 	{
-		T[] b;
-
-		b = a;
+		T temp;
 		
-		for (int i = 0; i < a.length; i++)
+		for (int i = 0; i < a.length/2; i++)
 		{
-			b[i] = a[a.length - 1 - i];
+			temp = a[i];
+			a[i] = a[a.length-1-i];
+			a[a.length-1-i] = temp;
 		}
-		return b;
 	}
 }
