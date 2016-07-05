@@ -2,29 +2,38 @@ package method;
 
 import chara.User;
 
+import com.example.predictionbustime.ChangePasswordActivity;
 import com.example.predictionbustime.MainActivity;
 import com.example.predictionbustime.SearchRouteByIdLayout;
+import com.example.predictionbustime.SignInActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class MenuSpinnerListener implements AdapterView.OnItemSelectedListener
+public class MenuListener implements AdapterView.OnItemSelectedListener,OnClickListener
 {
 	Button signButton;
 	Spinner menuSpinner;
-	User user;
+	User user = User.getUniqueUser();
+	Context nowActivity;
 	
-	public MenuSpinnerListener(Button signButton,Spinner menuSpinner,User user)
+	MyToast myToast;
+	
+	public MenuListener(Button signButton,Spinner menuSpinner,Context nowActivity)
 	{
 		this.signButton = signButton;
 		this.menuSpinner = menuSpinner;
-		this.user = user;
+		this.nowActivity = nowActivity;
+		myToast = new MyToast(nowActivity);
 	}
 	
 	@Override
@@ -69,11 +78,25 @@ public class MenuSpinnerListener implements AdapterView.OnItemSelectedListener
 	
 	public void changePassword()
 	{
-		
+		menuSpinner.setSelection(0);
+		Intent intent = new Intent();	
+		intent.setClass(nowActivity, ChangePasswordActivity.class);
+		nowActivity.startActivity(intent);
 	}
 	
 	public void deleteAccount()
 	{
 		
 	}
+
+	@Override
+	public void onClick(View v)
+	{
+		// TODO Auto-generated method stub
+		Intent intent = new Intent();
+		intent.setClass(nowActivity, SignInActivity.class);
+		nowActivity.startActivity(intent);
+	}
+	
+	
 }

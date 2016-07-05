@@ -25,7 +25,7 @@ public class SignInActivity extends Activity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_sign_in2);
+		setContentView(R.layout.activity_sign_in);
 		
 		uuidEdit = (EditText) findViewById(R.id.uuidEditText);
 		passwordEdit = (EditText) findViewById(R.id.passwordEditText);
@@ -54,12 +54,6 @@ public class SignInActivity extends Activity
 				}
 				else
 				{
-
-//					Bundle bundle = new Bundle();
-//					bundle.putString("UUID", uuidEdit.getText().toString());
-//					Intent intent = new Intent();
-//					intent.putExtras(bundle);
-//					setResult(RESULT_OK, intent);
 					user.setUUID(uuidEdit.getText().toString());
 				    finish();
 				}

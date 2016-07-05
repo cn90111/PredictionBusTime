@@ -1,7 +1,8 @@
 package com.example.predictionbustime;
 
 import chara.User;
-import method.MenuSpinnerListener;
+import method.MenuListener;
+import method.MyToast;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -29,7 +30,11 @@ public class MainActivity extends Activity
 	
 	User user = User.getUniqueUser();
 	
+	MenuListener menuListener;
+	
 	private final static int REQUEST_CODE = 0;
+	
+	MyToast myToast = new MyToast(MainActivity.this);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -45,58 +50,13 @@ public class MainActivity extends Activity
 		list = getResources().getStringArray(R.array.menu);
 		listAdapter = new ArrayAdapter(this,
 				R.layout.myspinner, list);
+		
+		menuListener = new MenuListener(signButton,menuSpinner,MainActivity.this);
+		
 		menuSpinner.setAdapter(listAdapter);
 		
-//		menuSpinner.setOnItemSelectedListener(
-//				new MenuSpinnerListener(signButton,menuSpinner,user));
+		menuSpinner.setOnItemSelectedListener(menuListener);
 		
-		menuSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() 
-		{
-
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					final int position, long id) 
-			{
-				// TODO Auto-generated method stub
-				switch(parent.getSelectedItem().toString())
-				{
-					case "登出":
-						System.out.println("登出");
-						signButton.setVisibility(View.VISIBLE);
-						menuSpinner.setVisibility(View.GONE);
-						menuSpinner.setSelection(0);
-						user.setUUID("");
-						break;
-
-					case "更改密碼":
-						System.out.println("更改密碼");
-						Intent intent = new Intent();	
-						intent.setClass(MainActivity.this, ChangePasswordActivity.class);
-//						Bundle bundle = new Bundle();
-//					    bundle.putString("UUID", user.getUUID());
-//					    intent.putExtras(bundle);
-						startActivity(intent);
-						break;
-
-					case "刪除帳號":
-						System.out.println("刪除帳號");
-						break;
-						
-					default:
-						System.out.println("程式錯誤");
-						Log.e("error","MenuSpinnerListener,程式錯誤");
-						break;
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-
 	}
 
 	@Override
@@ -126,26 +86,11 @@ public class MainActivity extends Activity
 
 				Intent intent = new Intent();	
 				intent.setClass(MainActivity.this, SearchRouteByIdLayout.class);
-//				Bundle bundle = new Bundle();
-//			    bundle.putString("UUID", user.getUUID());
-//			    intent.putExtras(bundle);
 				startActivity(intent);
 			}
 		});
 
-		signButton.setOnClickListener(new OnClickListener()
-		{
-
-			@Override
-			public void onClick(View v)
-			{
-				// TODO Auto-generated method stub
-				Intent intent = new Intent();
-				intent.setClass(MainActivity.this, SignInActivity.class);
-				startActivity(intent);
-//				startActivityForResult(intent,REQUEST_CODE);
-			}
-		});
+		signButton.setOnClickListener(menuListener);
 		
 		explanationButton.setOnClickListener(new OnClickListener()
 		{
@@ -160,34 +105,4 @@ public class MainActivity extends Activity
 			}
 		});
 	}
-
-	public void msgToast(String msg)
-	{
-		// CKJ: to show the short message using TOAST UI Component
-		Toast msgToast;
-		msgToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
-		msgToast.setText(msg);
-		msgToast.show();
-	}
-
-//	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-//	{
-//		// TODO Auto-generated method stub
-//		super.onActivityResult(requestCode, resultCode, data);
-//
-//		
-//		if (requestCode == REQUEST_CODE)
-//		{
-//			if (resultCode == RESULT_OK)
-//			{
-//				Bundle extras = data.getExtras();
-//				if (extras != null)
-//				{
-//					user.setUUID(extras.getString("UUID"));
-//					signButton.setVisibility(View.GONE);
-//					menuSpinner.setVisibility(View.VISIBLE);
-//				}
-//			}
-//		}
-//	}
 }

@@ -1,5 +1,6 @@
 package com.example.predictionbustime;
 
+import method.MyToast;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +16,8 @@ public class ChangePasswordActivity extends Activity
 	EditText oldPasswordEdit;
 	EditText newPasswordEdit,reIntputNewPasswordEdit;
 	Button okButton,returnButton;
+	MyToast myToast = new MyToast(ChangePasswordActivity.this);
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -47,21 +50,17 @@ public class ChangePasswordActivity extends Activity
 					if(newPasswordEdit.getText().toString().
 							equals(reIntputNewPasswordEdit.getText().toString()))
 					{
-						Toast.makeText(ChangePasswordActivity.this,
-								"密碼變更完成", Toast.LENGTH_SHORT).show();
-						
+						myToast.msgToast("密碼變更完成");
 						finish();
 					}
 					else
 					{
-						Toast.makeText(ChangePasswordActivity.this,
-								"兩次新密碼不一致", Toast.LENGTH_SHORT).show();
+						myToast.msgToast("兩次新密碼不一致");
 					}
 				}
 				else
 				{
-					Toast.makeText(ChangePasswordActivity.this,
-							"舊密碼錯誤", Toast.LENGTH_SHORT).show();
+					myToast.msgToast("舊密碼錯誤");
 				}
 				
 			}

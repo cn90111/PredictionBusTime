@@ -10,8 +10,10 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import method.MenuSpinnerListener;
+import method.MenuListener;
 import method.MyAdapter;
+import method.MyFormula;
+import method.MyToast;
 import network.SendPostThread;
 import refresh.RefreshPrintThread;
 
@@ -57,13 +59,19 @@ public class PrintSearchByIdResult extends Activity
 	List<BusDetail> bus_list = new ArrayList<BusDetail>();
 	private MyAdapter listAdapter;
 
+	MenuListener menuListener;
+		
 	RefreshPrintThread refreshPrintThread;
 	SendPostThread sendPostThread;
 	
+	MyToast myToast = new MyToast(PrintSearchByIdResult.this);
+	
 	String routeNumber;
 	String[] mTestArray;
-	int busDirection;
+	Integer[] startEndStationArray;
 	
+	boolean haveReservation = false;
+	int busDirection;
 	
 	int fakeTime = 0;
 	
@@ -99,68 +107,21 @@ public class PrintSearchByIdResult extends Activity
 		busDirection = BUS_FORWARD;
 		routeNumber = null;
 
+		menuListener = new MenuListener(signButton,menuSpinner,PrintSearchByIdResult.this);
+		
 		Intent intent = this.getIntent();
 		Bundle bundle = intent.getExtras();
 
 		refreshPrintThread = new RefreshPrintThread(runHandle);
 
 		routeNumber = bundle.getString("Route");
-//		user.setUUID(bundle.getString("UUID"));
 		printSearchTitle.setText("" + routeNumber + "號線");
 		
 		list = getResources().getStringArray(R.array.menu);
 		listAdapter2 = new ArrayAdapter(this,
 				R.layout.myspinner, list);
 		menuSpinner.setAdapter(listAdapter2);
-//		menuSpinner.setOnItemSelectedListener(
-//				new MenuSpinnerListener(signButton,menuSpinner,user));
-
-		menuSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() 
-		{
-
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					final int position, long id) 
-			{
-				// TODO Auto-generated method stub
-				switch(parent.getSelectedItem().toString())
-				{
-					case "登出":
-						System.out.println("登出");
-						signButton.setVisibility(View.VISIBLE);
-						menuSpinner.setVisibility(View.GONE);
-						menuSpinner.setSelection(0);
-						user.setUUID("");
-						break;
-
-					case "更改密碼":
-						System.out.println("更改密碼");
-						Intent intent = new Intent();	
-						intent.setClass(PrintSearchByIdResult.this, ChangePasswordActivity.class);
-//						Bundle bundle = new Bundle();
-//					    bundle.putString("UUID", user.getUUID());
-//					    intent.putExtras(bundle);
-						startActivity(intent);
-						break;
-
-					case "刪除帳號":
-						System.out.println("刪除帳號");
-						break;
-						
-					default:
-						System.out.println("程式錯誤");
-						Log.e("error","MenuSpinnerListener,程式錯誤");
-						break;
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
+		menuSpinner.setOnItemSelectedListener(menuListener);
 		
 		switch (routeNumber)
 		{
@@ -171,11 +132,18 @@ public class PrintSearchByIdResult extends Activity
 				mTestArray = getResources().getStringArray(R.array.id_160_route);
 				break;
 			default:
-				msgToast("系統錯誤，請聯絡工程師");;
+				myToast.msgToast("系統錯誤，請聯絡工程師");
 				break;
 		}
 
-		setListViewPrint(mTestArray, busDirection);
+		startEndStationArray = new Integer[mTestArray.length];
+		
+		for(int i=0 ; i<startEndStationArray.length ; i++)
+		{
+			startEndStationArray[i] = BusDetail.NONE_RESERVATION;
+		}
+		
+		setListViewPrint();
 		refreshPrintThread.start();
 	}
 
@@ -215,26 +183,15 @@ public class PrintSearchByIdResult extends Activity
 					busDirection = BUS_FORWARD;
 					break;
 				default:
-					msgToast("busDirection error");
+					myToast.msgToast("busDirection error");
 					break;
 				}
 
-				setListViewPrint(mTestArray, busDirection);
+				setListViewPrint();
 			}
 		});
 		
-		signButton.setOnClickListener(new OnClickListener()
-		{
-			
-			@Override
-			public void onClick(View v)
-			{
-				// TODO Auto-generated method stub
-				Intent intent = new Intent();
-				intent.setClass(PrintSearchByIdResult.this, SignInActivity.class);
-				startActivityForResult(intent,REQUEST_CODE);
-			}
-		});
+		signButton.setOnClickListener(menuListener);
 		
 		reservationButton.setOnClickListener(new OnClickListener()
 		{
@@ -243,19 +200,25 @@ public class PrintSearchByIdResult extends Activity
 			public void onClick(View v)
 			{
 				// TODO Auto-generated method stub
-				if(startReservation == true)
+				if(haveReservation == true)
 				{
 					startReservation = false;
+					haveReservation = false;
 					reservationButton.setText("開始預約");
-					msgToast("取消之前所做的預約設定");
-					
+
+					myToast.msgToast("取消之前所做的預約設定");
+				
+					for(int i=0 ; i<startEndStationArray.length ; i++)
+					{
+						startEndStationArray[i] = BusDetail.NONE_RESERVATION;
+					}
+					setListViewPrint();
 				}
 				else
 				{
 					startReservation = true;
-					reservationButton.setEnabled(false);;
-					Toast.makeText(PrintSearchByIdResult.this, 
-							"啟動預約功能,請您點擊要上車的起始站(直接點擊顯示時間的地方即可)", Toast.LENGTH_LONG).show();
+					reservationButton.setEnabled(false);
+					myToast.msgToast("啟動預約功能,請您點擊要上車的起始站(直接點擊顯示時間的地方即可)");
 				}
 			}
 		});
@@ -297,31 +260,25 @@ public class PrintSearchByIdResult extends Activity
 		}
 	}
 
-	public String[] reverse(String[] a)
-	{
-		String[] b = new String[a.length];
-
-		for (int i = 0; i < a.length; i++)
-		{
-			b[i] = a[a.length - 1 - i];
-		}
-		return b;
-	}
-
-	public void setListViewPrint(String[] mTestArray, int busDirection)
+	
+	//String[] mTestArray, int busDirection,Integer[] startEndStation
+	public void setListViewPrint()
 	{
 		bus_list.clear();
 
 		if (busDirection == BUS_INVERSE)
 		{
-			mTestArray = reverse(mTestArray);
+			mTestArray = new MyFormula<String>().reverse(mTestArray);
+			startEndStationArray = new MyFormula<Integer>().reverse(startEndStationArray);
+			
 		}
 
 		for (int i = 0; i < mTestArray.length; i++)
 		{
 			bus_list.add(new BusDetail(mTestArray[i],
 					getNeedMinute(mTestArray[i]),
-					getGoToStationType(mTestArray[i])));
+					getGoToStationType(mTestArray[i]),
+					getReservationStation(i)));
 		}
 
 		switchButton.setText("往" + mTestArray[0]);
@@ -347,25 +304,34 @@ public class PrintSearchByIdResult extends Activity
 						{
 							if(user.getUUID().equals(""))
 							{
-								msgToast("要使用預約功能請先登入");
+								myToast.msgToast("要使用預約功能請先登入");
 							}
 							else
 							{
 								if(endStationID != -1)
 								{
-									msgToast("前一次預約將被取消，開始進行新預約");
+									myToast.msgToast("前一次預約已被取消，開始進行新預約");
 									endStationID = -1;
+
 								}
 								
 								startStationID = position;
 								listViewState = SELECT_END_STATION;
-								msgToast("已選擇上車站，請選擇下車站");
-//								printSearchTitle.setText("請問要在哪站下車?");
+								myToast.msgToast("已選擇上車站，請選擇下車站，若要取消請再點擊一次上車站");
+								updateReservation(startStationID,BusDetail.RESERVATION_START_STATION);
+								
 							}
 						}
 						else
 						{
-							msgToast("請開啟預約按鈕");
+							if(haveReservation == true)
+							{
+								myToast.msgToast("若要重新預約，請先按下取消預約");
+							}
+							else
+							{
+								myToast.msgToast("請開啟預約按鈕");
+							}
 						}
 						break;
 					case SELECT_END_STATION:
@@ -373,7 +339,7 @@ public class PrintSearchByIdResult extends Activity
 						{
 							if(user.getUUID().equals(""))
 							{
-								msgToast("要使用預約功能請先登入");
+								myToast.msgToast("要使用預約功能請先登入");
 								listViewState = SELECT_START_STATION;
 								printSearchTitle.setText("" + routeNumber + "號線");
 							}
@@ -381,23 +347,30 @@ public class PrintSearchByIdResult extends Activity
 							{
 								if(startStationID > position)
 								{
-									msgToast("請選擇上車站後的站");
+									myToast.msgToast("請選擇上車站後的站");
 								}
 								else if(startStationID == position)
 								{
-									msgToast("取消預約程序");
+									myToast.msgToast("取消預約程序");
 									listViewState = SELECT_START_STATION;
+									updateReservation(startStationID,BusDetail.NONE_RESERVATION);
 									printSearchTitle.setText("" + routeNumber + "號線");
 								}
 								else
 								{
-									msgToast("預約請求已發出");
+									myToast.msgToast("預約請求已發出");
 									listViewState = SELECT_START_STATION;
 									printSearchTitle.setText("" + routeNumber + "號線");
 									endStationID = position;
-
+									
+									updateReservation(endStationID,BusDetail.RESERVATION_END_STATION);
+									
+									haveReservation = true;
+									startReservation = false;
+									
 									reservationButton.setEnabled(true);
 									reservationButton.setText("取消預約");
+									
 									
 									reservation();
 								}
@@ -405,12 +378,12 @@ public class PrintSearchByIdResult extends Activity
 						}
 						else
 						{
-							msgToast("請開啟預約按鈕");
+							myToast.msgToast("請開啟預約按鈕");
 							listViewState = SELECT_START_STATION;
 						}
 						break;
 					default:
-						msgToast("系統錯誤，請聯絡工程師");						
+						myToast.msgToast("系統錯誤，請聯絡工程師");			
 						break;
 				}
 			}
@@ -430,7 +403,7 @@ public class PrintSearchByIdResult extends Activity
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			msgToast("URL錯誤");
+			myToast.msgToast("URL錯誤");
 		}
 		
 		StringBuilder uriparameters = new StringBuilder();
@@ -445,7 +418,7 @@ public class PrintSearchByIdResult extends Activity
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			msgToast("URLEncoder錯誤");
+			myToast.msgToast("URLEncoder錯誤");
 		}
 		
 		
@@ -529,16 +502,12 @@ public class PrintSearchByIdResult extends Activity
 
 		return state;
 	}
-
-	public void msgToast(String msg)
+	
+	public int getReservationStation(int stationID)
 	{
-		// CKJ: to show the short message using TOAST UI Component
-		Toast msgToast;
-		msgToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
-		msgToast.setText(msg);
-		msgToast.show();
+		return startEndStationArray[stationID];
 	}
-
+	
 	public JSONObject fakeData(String station,int fakeTime)
 	{
 		JSONObject[] fakeSearchData = null;
@@ -653,7 +622,6 @@ public class PrintSearchByIdResult extends Activity
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			msgToast("a");
 		}
 		
 		for(int i=0 ; i<fakeSearchData.length ; i++)
@@ -677,7 +645,6 @@ public class PrintSearchByIdResult extends Activity
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				msgToast("b");
 			}
 		}
 		
@@ -696,7 +663,7 @@ public class PrintSearchByIdResult extends Activity
 					
 					fakeTime++;
 					
-					setListViewPrint(mTestArray, busDirection);
+					setListViewPrint();
 					
 //					msgToast(""+fakeTime);
 					
@@ -709,7 +676,7 @@ public class PrintSearchByIdResult extends Activity
 				break;
 				case TAKE_POST_RETURN_RESULT:
 					Log.w("Message", "" + msg.what);
-					msgToast(sendPostThread.getResult());
+					myToast.msgToast(sendPostThread.getResult());
 					
 					
 				break;
@@ -736,5 +703,11 @@ public class PrintSearchByIdResult extends Activity
 				}
 			}
 		}
+	}
+	
+	public void updateReservation(int i,int reservationState)
+	{
+		startEndStationArray[i] = reservationState;
+		setListViewPrint();
 	}
 }

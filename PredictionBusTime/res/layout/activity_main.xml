@@ -16,13 +16,16 @@
             android:id="@+id/searchBusByID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="查詢路線" />
+            android:text="查詢路線"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/explanationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/explanation" />
+            android:layout_marginTop="20dp"
+            android:text="@string/explanation"
+            android:textSize="20sp" />
 
     </LinearLayout>
 

@@ -36,14 +36,16 @@ public class MyAdapter extends BaseAdapter
 		TextView txtStation;
 		TextView txtMinute;
 		TextView txtType;
+		TextView txtStartEndStation;
 		RelativeLayout background;
 
 		public ViewHolder(TextView txtStation, TextView txtMinute,
-				TextView txtType,RelativeLayout background)
+				TextView txtType,TextView txtStartEndStation,RelativeLayout background)
 		{
 			this.txtStation = txtStation;
 			this.txtMinute = txtMinute;
 			this.txtType = txtType;
+			this.txtStartEndStation = txtStartEndStation;
 			this.background = background;
 		}
 	}
@@ -105,6 +107,7 @@ public class MyAdapter extends BaseAdapter
 					(TextView) convertView.findViewById(R.id.station),
 					(TextView) convertView.findViewById(R.id.minute),
 					(TextView) convertView.findViewById(R.id.goToStationType),
+					(TextView) convertView.findViewById(R.id.startEndStation),
 					(RelativeLayout) convertView.findViewById(R.id.background));
 			convertView.setTag(holder);
 		}
@@ -138,6 +141,21 @@ public class MyAdapter extends BaseAdapter
         		
         }
         
+        switch(busDetail.getReservationStation())
+        {
+        	case BusDetail.NONE_RESERVATION:
+        		holder.txtStartEndStation.setText("");
+        		break;
+        	case BusDetail.RESERVATION_START_STATION:
+        		holder.txtStartEndStation.setText("起");
+        		holder.txtStartEndStation.setTextColor(0xFF0066FF);
+        		break;
+        	case BusDetail.RESERVATION_END_STATION:
+        		holder.txtStartEndStation.setText("迄");
+        		holder.txtStartEndStation.setTextColor(0xFF0066FF);
+        		break;
+        }
+        
         switch(getStationCount())
         {
         	case 1:
@@ -157,5 +175,4 @@ public class MyAdapter extends BaseAdapter
         
 		return convertView;
 	}
-
 }
