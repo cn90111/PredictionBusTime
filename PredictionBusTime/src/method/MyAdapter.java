@@ -91,7 +91,10 @@ public class MyAdapter extends BaseAdapter
 		busDetail = (BusDetail)getItem(position);
 
         holder.txtStation.setText(busDetail.getStation());
+        holder.txtStation.setTextColor(0xFFFFFFFF);
+        
         holder.txtMinute.setText(new Integer(busDetail.getMinute()).toString() + "分鐘");
+        holder.txtMinute.setTextColor(0xFFFFFFFF);
         
         switch(busDetail.getGoToStationType())
         {
@@ -112,11 +115,12 @@ public class MyAdapter extends BaseAdapter
 	    		break;
         		
         }
+        holder.txtType.setTextColor(0xFFFFFFFF);
         
         switch(busDetail.getReservationStation())
         {
         	case BusDetail.NONE_RESERVATION:
-        		holder.txtStartEndStation.setText("");
+        		holder.txtStartEndStation.setText("　");
         		break;
         	case BusDetail.RESERVATION_START_STATION:
         		holder.txtStartEndStation.setText("起");
@@ -140,7 +144,7 @@ public class MyAdapter extends BaseAdapter
         		holder.background.setBackgroundColor(0xFFFFD306);
         		break;
         	default:
-        		holder.background.setBackgroundColor(0xFF28FF28);
+        		holder.background.setBackgroundColor(0xFF00DD00);
         		break;
         		
         }

@@ -363,6 +363,8 @@ public class PrintSearchByIdResult extends Activity
 									listViewState = SELECT_START_STATION;
 									updateReservation(startStationID,BusDetail.NONE_RESERVATION);
 									printSearchTitle.setText("" + routeNumber + "號線");
+									reservationButton.setEnabled(true);
+									startReservation = false;
 								}
 								else
 								{

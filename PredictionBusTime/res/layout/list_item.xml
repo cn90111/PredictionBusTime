@@ -8,39 +8,38 @@
 	    android:id="@+id/station"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="5dp"
-    	android:layout_marginBottom="5dp"
+	    android:layout_alignParentLeft="true"
+	    android:layout_marginBottom="15dp"
+	    android:layout_marginTop="15dp"
 	    android:text="" />
-
-	<TextView
-	    android:id="@+id/minute"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_centerInParent="true"
-	    android:layout_weight="0.5" 
-	    android:layout_marginTop="5dp"
-    	android:layout_marginBottom="5dp"
-	    android:text="" />
-
+	
 	<TextView
 	    android:id="@+id/goToStationType"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-	    android:layout_weight="0.5"  
-	    android:layout_marginTop="5dp"
-    	android:layout_marginBottom="5dp"
-	    android:text=""/>
-
+	    android:layout_alignParentRight="true"
+	    android:layout_marginBottom="15dp"
+	    android:layout_marginTop="15dp"
+	    android:text="" />
+	
 	<TextView
 	    android:id="@+id/startEndStation"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop="5dp"
-    	android:layout_marginBottom="5dp"
-	    android:layout_marginRight="5dp"
+	    android:layout_marginBottom="15dp"
+	    android:layout_marginTop="15dp"
+	    android:layout_marginRight="15dp"
 	    android:layout_toLeftOf="@+id/goToStationType"
+	    android:text="　"
+	    android:textSize="15sp" />
+	
+	<TextView
+	    android:id="@+id/minute"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_toLeftOf="@+id/goToStationType"
+	    android:layout_marginRight="40dp"
+	    android:layout_marginBottom="15dp"
+	    android:layout_marginTop="15dp"
 	    android:text="" />
-
 </RelativeLayout>

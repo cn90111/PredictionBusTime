@@ -372,7 +372,7 @@ int id end 0x7f09001c
 int id expand_activities_button 0x7f090022
 int id expanded_menu 0x7f090028
 int id explanationButton 0x7f09004c
-int id goToStationType 0x7f090059
+int id goToStationType 0x7f090058
 int id home 0x7f090000
 int id homeAsUp 0x7f09000e
 int id icon 0x7f090026
@@ -383,7 +383,7 @@ int id listMode 0x7f09000a
 int id list_item 0x7f090025
 int id menuSpinner 0x7f09004d
 int id middle 0x7f09001d
-int id minute 0x7f090058
+int id minute 0x7f09005a
 int id never 0x7f090017
 int id newPasswordEdit 0x7f090041
 int id nextPageButton 0x7f090049
@@ -422,7 +422,7 @@ int id showTitle 0x7f090012
 int id signButton 0x7f09004e
 int id spinnerBusID 0x7f09005f
 int id split_action_bar 0x7f090004
-int id startEndStation 0x7f09005a
+int id startEndStation 0x7f090059
 int id station 0x7f090057
 int id submit_area 0x7f09003c
 int id switchButton 0x7f09005e
