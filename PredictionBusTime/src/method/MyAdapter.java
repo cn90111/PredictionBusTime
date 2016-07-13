@@ -127,7 +127,7 @@ public class MyAdapter extends BaseAdapter
         		holder.txtStartEndStation.setTextColor(0xFF0066FF);
         		break;
         	case BusDetail.RESERVATION_END_STATION:
-        		holder.txtStartEndStation.setText("迄");
+        		holder.txtStartEndStation.setText("訖");
         		holder.txtStartEndStation.setTextColor(0xFF0066FF);
         		break;
         }

@@ -118,8 +118,6 @@ public class PrintSearchByIdResult extends Activity
 		Intent intent = this.getIntent();
 		Bundle bundle = intent.getExtras();
 
-		refreshPrintThread = new RefreshPrintThread(runHandle);
-
 		routeNumber = bundle.getString("Route");
 		printSearchTitle.setText("" + routeNumber + "號線");
 		
@@ -128,6 +126,7 @@ public class PrintSearchByIdResult extends Activity
 				R.layout.myspinner, list);
 		menuSpinner.setAdapter(listAdapter2);
 		menuSpinner.setOnItemSelectedListener(menuListener);
+
 		
 		switch (routeNumber)
 		{
@@ -150,15 +149,18 @@ public class PrintSearchByIdResult extends Activity
 		}
 		
 		setListViewPrint();
-		refreshPrintThread.start();
+		
 	}
-
+	
 	@Override
 	protected void onStart()
 	{
 		// TODO Auto-generated method stub
 		super.onStart();
-
+		
+		refreshPrintThread = new RefreshPrintThread(runHandle);
+		refreshPrintThread.start();
+		
 		if(user.getUUID().equals(""))
 		{
 			menuSpinner.setVisibility(View.GONE);
@@ -244,6 +246,25 @@ public class PrintSearchByIdResult extends Activity
 				finish();
 			}
 		});
+		
+	}
+
+	@Override
+	protected void onResume()
+	{
+		// TODO Auto-generated method stub
+		super.onResume();
+		
+	}
+	
+	
+	
+	@Override
+	protected void onPause()
+	{
+		// TODO Auto-generated method stub
+		super.onPause();
+		
 	}
 
 	@Override

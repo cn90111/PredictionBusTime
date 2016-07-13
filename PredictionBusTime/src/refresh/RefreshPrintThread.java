@@ -17,12 +17,12 @@ public class RefreshPrintThread extends Thread
 	public RefreshPrintThread(Handler handler)
 	{
 		count = 0;
-		exit = false;
 		this.handler = handler;
 	}
 	
 	public void run()
 	{
+		exit = false;
 		while(exit == false)
 		{
 			try
