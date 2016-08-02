@@ -3,10 +3,12 @@ package com.example.predictionbustime;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +17,10 @@ import method.MyAdapter;
 import method.MyFormula;
 import method.MyToast;
 import network.SendPostThread;
+import network.SendGetThread;
 import refresh.RefreshPrintThread;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,8 +43,8 @@ import android.widget.Toast;
 
 public class PrintSearchByIdResult extends Activity
 {
-	private static final int BUS_FORWARD = 0;
-	private static final int BUS_INVERSE = 1;
+	public static final int BUS_FORWARD = 0;
+	public static final int BUS_INVERSE = 1;
 
 	private static final int SELECT_START_STATION = 0;
 	private static final int SELECT_END_STATION = 1;
@@ -48,6 +52,7 @@ public class PrintSearchByIdResult extends Activity
 	public static final int THROUGH_TEST = 0;
 	public static final int LISTVIEW_UPDATE = 1;
 	public static final int TAKE_POST_RETURN_RESULT = 2;
+	public static final int TAKE_GET_RETURN_RESULT = 3;
 	
 	TextView printSearchTitle;
 	Button switchButton,signButton,reservationButton,returnButton;
@@ -63,6 +68,9 @@ public class PrintSearchByIdResult extends Activity
 		
 	RefreshPrintThread refreshPrintThread;
 	SendPostThread sendPostThread;
+	SendGetThread sendGetThread;
+	
+	JSONArray busAllData;
 	
 	MyToast myToast = new MyToast(PrintSearchByIdResult.this);
 	
@@ -243,6 +251,7 @@ public class PrintSearchByIdResult extends Activity
 			public void onClick(View v)
 			{
 				// TODO Auto-generated method stub
+//				myToast.msgToast(busAllData.toString());
 				finish();
 			}
 		});
@@ -291,7 +300,6 @@ public class PrintSearchByIdResult extends Activity
 			refreshPrintThread = null;
 		}
 	}
-
 	
 	//String[] mTestArray, int busDirection,Integer[] startEndStation
 	public void setListViewPrint()
@@ -300,7 +308,58 @@ public class PrintSearchByIdResult extends Activity
 
 		previousArrivalTime = -1;
 		busApartStationCount = -1;
+				
+		getBusAllData(routeNumber,busDirection);
+	}
+	
+	public void getBusAllData(String route,int isReverse)
+	{
+		URL url = null;
+		boolean is_reverse = true;
 		
+		if(isReverse == BUS_INVERSE)
+		{
+			is_reverse = true;
+		}
+		else if(isReverse == BUS_FORWARD)
+		{
+			is_reverse = false;
+		}
+		else
+		{
+			Log.e("錯誤", "公車方向不定");
+			myToast.msgToast("錯誤，公車方向有誤");
+			System.exit(1);
+		}
+		
+		try
+		{
+			url = new URL("http://ibus.team-bob.org:3000/v2/busArrival?"
+					+ "route=" + route
+					+ "&is_reverse=" + is_reverse);
+		}
+		catch (MalformedURLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			myToast.msgToast("URL錯誤");
+		}
+		
+		sendGetThread = new SendGetThread(url, runHandle);
+		sendGetThread.start();
+	}
+	
+	public void printBusData()
+	{
+		if(busAllData != null)
+		{
+//			myToast.msgToast(busAllData.toString());
+		}
+		else
+		{
+			myToast.msgToast("資料取得失敗，請稍後");
+		}
+			
 		for (int i = 0; i < mTestArray.length; i++)
 		{
 			bus_list.add(new BusDetail(mTestArray[i],
@@ -421,7 +480,7 @@ public class PrintSearchByIdResult extends Activity
 
 		});
 	}
-
+	
 	public void reservation()
 	{
 		URL url = null;
@@ -457,41 +516,130 @@ public class PrintSearchByIdResult extends Activity
 		sendPostThread.start();
 	}
 
+	public int getStationID(String station)
+	{
+		int ID = -1;
+		
+		for(int i=0 ; i<mTestArray.length ; i++)
+		{
+			if(mTestArray[i].equals(station))
+			{
+				ID = i;
+				
+				if(busDirection == BUS_INVERSE)
+				{
+					ID = mTestArray.length - 1 - i;
+				}
+				
+				ID = ID+1;
+						
+				break;
+			}
+		}
+		
+		return ID;
+	}
+	
 	public int getNeedMinute(String station)
 	{
 		int time = 0;
+		int ID;
 		JSONObject jsonObject = null;
-		URL url = null;
+		Timestamp arrivalTime;
+		Timestamp nowTime; 
+		Timestamp resultTime;
 		
-		try
+		ID = getStationID(station);
+		
+		if(ID <= 0)
 		{
-			url = new URL("");
-			time = jsonObject.getInt("time");
+			time = -1;
 		}
-		catch (MalformedURLException e)
+		else
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-			try
+			for(int i=0 ; i<busAllData.length() ; i++)
 			{
-				if(routeNumber.equals("160") && busDirection == BUS_FORWARD)
+				try
 				{
-					time = fakeData(station,fakeTime).getInt("Time");
+					if(busAllData.getJSONObject(i).getInt("sn") == ID)
+					{
+						jsonObject = busAllData.getJSONObject(i);
+						Log.v("jsonObject已取得", "ID:"+ID);
+					}
+				}
+				catch (JSONException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
-			catch (JSONException e1)
+			if(jsonObject != null)
 			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				String tempString = null;
+				try
+				{
+					tempString = jsonObject.getString("prediction");
+				}
+				catch (JSONException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if(tempString != null)
+				{
+					String[] splitString = tempString.split("[-T:Z.]");
+//					myToast.msgToast(splitString[0]+","+splitString[1]+","+splitString[2]
+//							+","+splitString[3]+","+splitString[4]+","+splitString[5]);
+					
+					int[] splitTime = new int[]{new Integer(splitString[0])-1900,
+							new Integer(splitString[1])-1,
+							new Integer(splitString[2]),
+							new Integer(splitString[3])+8,
+							new Integer(splitString[4]),
+							new Integer(splitString[5]),
+							new Integer(splitString[6])};
+					
+					
+					arrivalTime = new Timestamp(splitTime[0], splitTime[1], 
+							splitTime[2], splitTime[3], splitTime[4], splitTime[5],
+							splitTime[6]);
+					
+					Log.v("公車到站時間─"+station,arrivalTime.toString());
+					
+//					arrivalTime = new Timestamp(System.currentTimeMillis());
+					
+//					myToast.msgToast(arrivalTime.toString());
+					
+					nowTime = new Timestamp(System.currentTimeMillis());
+					
+//					myToast.msgToast(nowTime.toString());
+					
+					resultTime = new Timestamp(arrivalTime.getTime() - nowTime.getTime());
+					
+//					myToast.msgToast(""+resultTime.toString());
+					
+					time = (int) Math.ceil(resultTime.getTime()/1000/60) ;
+					
+				}
+				else
+				{
+					myToast.msgToast("字串為空");	
+					System.exit(0);
+				}
 			}
-		}
-		catch (JSONException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			else
+			{
+				Log.e(station+" jsonObject取得失敗", "PrintSearchByIdResult 597");
+				System.exit(0);
+			}
+			
+			
+			
+			//arrivalTime = new Timestamp(theYear, theMonth, theDate, theHour, theMinute, theSecond, theNano);
 		}
 		
+		
+		//著色
 		if(previousArrivalTime < 0)
 		{
 			previousArrivalTime = time;
@@ -518,39 +666,48 @@ public class PrintSearchByIdResult extends Activity
 	public int getGoToStationType(String station)
 	{
 		int state = 0;
-		JSONObject jsonObject = null;
-		URL url = null;
+//		JSONObject jsonObject = null;
+//		URL url = null;
+//
+//		try
+//		{
+//			url = new URL("");
+//			state = jsonObject.getInt("state");
+//		}
+//		catch (MalformedURLException e)
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//
+//			try
+//			{
+//				if(routeNumber.equals("160") && busDirection == BUS_FORWARD)
+//				{
+//
+//					state = fakeData(station,fakeTime).getInt("State");
+//				}
+//			}
+//			catch (JSONException e1)
+//			{
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//		}
+//		catch (JSONException e)
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
-		try
+		if(haveReservation == false)
 		{
-			url = new URL("");
-			state = jsonObject.getInt("state");
+			state = BusDetail.NORMAL;
 		}
-		catch (MalformedURLException e)
+		else
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-			try
-			{
-				if(routeNumber.equals("160") && busDirection == BUS_FORWARD)
-				{
-
-					state = fakeData(station,fakeTime).getInt("State");
-				}
-			}
-			catch (JSONException e1)
-			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			state = BusDetail.LATE;
 		}
-		catch (JSONException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		
 		return state;
 	}
 	
@@ -563,139 +720,6 @@ public class PrintSearchByIdResult extends Activity
 	{
 		return busApartStationCount;
 	}
-	
-	public JSONObject fakeData(String station,int fakeTime)
-	{
-		JSONObject[] fakeSearchData = null;
-		JSONObject jsonObject = null;
-		boolean find = false;
-
-		String[][] fakeSearchResult = new String[][] {
-				{
-					"{\"BusID\":2," + "\"Time\":18," + "\"State\":2}",
-					"{\"BusID\":0," + "\"Time\":5," + "\"State\":1}",
-					"{\"BusID\":0," + "\"Time\":11," + "\"State\":1}",
-					"{\"BusID\":0," + "\"Time\":16," + "\"State\":1}",
-					"{\"BusID\":1," + "\"Time\":7," + "\"State\":1}",
-					"{\"BusID\":1," + "\"Time\":15," + "\"State\":1}",
-					"{\"BusID\":1," + "\"Time\":22," + "\"State\":1}",
-					"{\"BusID\":1," + "\"Time\":25," + "\"State\":2}",
-					"{\"BusID\":1," + "\"Time\":27," + "\"State\":3}"
-				},
-				{
-					"{\"BusID\":2," + "\"Time\":16," + "\"State\":2}",
-					"{\"BusID\":0," + "\"Time\":0," + "\"State\":1}",
-					"{\"BusID\":0," + "\"Time\":10," + "\"State\":1}",
-					"{\"BusID\":0," + "\"Time\":14," + "\"State\":2}",
-					"{\"BusID\":1," + "\"Time\":5," + "\"State\":1}",
-					"{\"BusID\":1," + "\"Time\":13," + "\"State\":1}",
-					"{\"BusID\":1," + "\"Time\":20," + "\"State\":1}",
-					"{\"BusID\":1," + "\"Time\":22," + "\"State\":2}",
-					"{\"BusID\":1," + "\"Time\":24," + "\"State\":3}"
-				},
-				{
-					"{\"BusID\":2," + "\"Time\":14," + "\"State\":2}",
-					"{\"BusID\":0," + "\"Time\":0," + "\"State\":1}",
-					"{\"BusID\":0," + "\"Time\":10," + "\"State\":1}",
-					"{\"BusID\":0," + "\"Time\":14," + "\"State\":2}",
-					"{\"BusID\":1," + "\"Time\":0," + "\"State\":2}",
-					"{\"BusID\":1," + "\"Time\":11," + "\"State\":1}",
-					"{\"BusID\":1," + "\"Time\":18," + "\"State\":2}",
-					"{\"BusID\":1," + "\"Time\":21," + "\"State\":2}",
-					"{\"BusID\":1," + "\"Time\":23," + "\"State\":3}"
-				},
-				{
-					"{\"BusID\":2," + "\"Time\":8," + "\"State\":2}",
-					"{\"BusID\":2," + "\"Time\":13," + "\"State\":2}",
-					"{\"BusID\":0," + "\"Time\":0," + "\"State\":1}",
-					"{\"BusID\":0," + "\"Time\":5," + "\"State\":1}",
-					"{\"BusID\":0," + "\"Time\":13," + "\"State\":1}",
-					"{\"BusID\":1," + "\"Time\":5," + "\"State\":2}",
-					"{\"BusID\":1," + "\"Time\":12," + "\"State\":2}",
-					"{\"BusID\":1," + "\"Time\":15," + "\"State\":2}",
-					"{\"BusID\":1," + "\"Time\":17," + "\"State\":2}"
-				},
-				{
-					"{\"BusID\":2," + "\"Time\":5," + "\"State\":2}",
-					"{\"BusID\":2," + "\"Time\":10," + "\"State\":2}",
-					"{\"BusID\":2," + "\"Time\":16," + "\"State\":1}",
-					"{\"BusID\":0," + "\"Time\":0," + "\"State\":1}",
-					"{\"BusID\":0," + "\"Time\":10," + "\"State\":1}",
-					"{\"BusID\":1," + "\"Time\":0," + "\"State\":1}",
-					"{\"BusID\":1," + "\"Time\":10," + "\"State\":1}",
-					"{\"BusID\":1," + "\"Time\":12," + "\"State\":1}",
-					"{\"BusID\":1," + "\"Time\":14," + "\"State\":1}"
-				},
-				{
-					"{\"BusID\":3," + "\"Time\":14," + "\"State\":3}",
-					"{\"BusID\":3," + "\"Time\":19," + "\"State\":3}",
-					"{\"BusID\":3," + "\"Time\":25," + "\"State\":3}",
-					"{\"BusID\":3," + "\"Time\":30," + "\"State\":3}",
-					"{\"BusID\":0," + "\"Time\":0," + "\"State\":1}",
-					"{\"BusID\":0," + "\"Time\":11," + "\"State\":1}",
-					"{\"BusID\":1," + "\"Time\":4," + "\"State\":2}",
-					"{\"BusID\":1," + "\"Time\":7," + "\"State\":2}",
-					"{\"BusID\":1," + "\"Time\":9," + "\"State\":2}"
-				}
-		};
-		try
-		{
-			if(fakeTime < fakeSearchResult.length)
-			{
-				fakeSearchData = new JSONObject[] { 
-						
-						new JSONObject(fakeSearchResult[fakeTime][0]),
-						new JSONObject(fakeSearchResult[fakeTime][1]),
-						new JSONObject(fakeSearchResult[fakeTime][2]),
-						new JSONObject(fakeSearchResult[fakeTime][3]),
-						new JSONObject(fakeSearchResult[fakeTime][4]),
-						new JSONObject(fakeSearchResult[fakeTime][5]),
-						new JSONObject(fakeSearchResult[fakeTime][6]),
-						new JSONObject(fakeSearchResult[fakeTime][7]),
-						new JSONObject(fakeSearchResult[fakeTime][8])
-				};
-			}
-			else
-			{
-				fakeSearchData  = new JSONObject[] { 
-						
-						new JSONObject("{\"BusID\":-99," + "\"Time\":-1," + "\"State\":4}")
-				};
-			}
-			
-		}
-		catch (JSONException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		for(int i=0 ; i<fakeSearchData.length ; i++)
-		{
-			if(mTestArray[i].equals(station))
-			{
-//				msgToast(""+fakeSearchData[fakeTime].length());
-				jsonObject = fakeSearchData[i];
-				find = true;
-			}
-		}
-		
-		if(find == false)
-		{
-			try
-			{
-				jsonObject = 
-						new JSONObject("{\"BusID\":-99," + "\"Time\":-1," + "\"State\":4}");
-			}
-			catch (JSONException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		return jsonObject;
-	}
 
 	private final Handler runHandle = new Handler()
 	{
@@ -707,25 +731,27 @@ public class PrintSearchByIdResult extends Activity
 				case LISTVIEW_UPDATE:
 					Log.w("Message", "" + msg.what);
 					
-					fakeTime++;
-					
 					setListViewPrint();
 					
-//					msgToast(""+fakeTime);
-					
-					
-
 				break;
+				
 				case THROUGH_TEST:
 					Log.w("Message", "" + msg.what);
 	
 				break;
+				
 				case TAKE_POST_RETURN_RESULT:
 					Log.w("Message", "" + msg.what);
 					myToast.msgToast(sendPostThread.getResult());
-					
-					
 				break;
+				
+				case TAKE_GET_RETURN_RESULT:
+					Log.w("Message", "" + msg.what);
+					busAllData = sendGetThread.getResult();
+					sendGetThread = null;
+					printBusData();
+				break;
+				
 			}
 		}
 	};
