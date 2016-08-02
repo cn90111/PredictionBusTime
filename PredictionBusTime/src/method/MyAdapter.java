@@ -93,7 +93,19 @@ public class MyAdapter extends BaseAdapter
         holder.txtStation.setText(busDetail.getStation());
         holder.txtStation.setTextColor(0xFFFFFFFF);
         
-        holder.txtMinute.setText(new Integer(busDetail.getMinute()).toString() + "分鐘");
+        if(busDetail.getMinute() > -10 && busDetail.getMinute() < 0)
+        {
+        	holder.txtMinute.setText("即將到站");
+        }
+        else if(busDetail.getMinute() < -10 )
+        {
+        	holder.txtMinute.setText("");
+        }
+        else
+        {
+        	holder.txtMinute.setText(new Integer(busDetail.getMinute()).toString() + "分鐘");
+        }
+        
         holder.txtMinute.setTextColor(0xFFFFFFFF);
         
         switch(busDetail.getGoToStationType())
@@ -108,7 +120,7 @@ public class MyAdapter extends BaseAdapter
         		holder.txtType.setText("比預估晚");
         		break;
         	case BusDetail.NO_BUS:
-        		holder.txtType.setText("已無公車");
+        		holder.txtType.setText("末班車已駛離");
         		break;
         	default:
         		holder.txtType.setText("錯誤");

@@ -156,6 +156,8 @@ public class PrintSearchByIdResult extends Activity
 			startEndStationArray[i] = BusDetail.NONE_RESERVATION;
 		}
 		
+		myToast.msgToast("更新畫面中，請稍後");
+		
 		setListViewPrint();
 		
 	}
@@ -207,7 +209,7 @@ public class PrintSearchByIdResult extends Activity
 				
 				new MyFormula<String>().reverse(mTestArray);
 				new MyFormula<Integer>().reverse(startEndStationArray);
-
+				
 				setListViewPrint();
 			}
 		});
@@ -328,8 +330,8 @@ public class PrintSearchByIdResult extends Activity
 		else
 		{
 			Log.e("錯誤", "公車方向不定");
-			myToast.msgToast("錯誤，公車方向有誤");
 			System.exit(1);
+			myToast.msgToast("錯誤，公車方向有誤");
 		}
 		
 		try
@@ -623,14 +625,16 @@ public class PrintSearchByIdResult extends Activity
 				}
 				else
 				{
-					myToast.msgToast("字串為空");	
-					System.exit(0);
+					Log.e("資料更新失敗", "PrintSearchByIdResult字串無法取得");
+					myToast.msgToast("資料更新失敗");	
+//					System.exit(1);
 				}
 			}
 			else
 			{
-				Log.e(station+" jsonObject取得失敗", "PrintSearchByIdResult 597");
-				System.exit(0);
+				Log.e(station+" jsonObject取得失敗", "PrintSearchByIdResult");
+				myToast.msgToast("資料更新失敗");	
+//				System.exit(1);
 			}
 			
 			
