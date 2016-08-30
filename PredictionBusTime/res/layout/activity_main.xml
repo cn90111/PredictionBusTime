@@ -16,7 +16,7 @@
             android:id="@+id/searchBusByID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="查詢路線"
+            android:text="@string/inquire_route"
             android:textSize="20sp" />
 
         <Button
@@ -42,6 +42,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="@string/sign_in" />
+        android:text="@string/log_in" />
 
 </RelativeLayout>

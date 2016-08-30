@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="@string/sign_in" />
+        android:text="@string/log_in" />
     
     <Spinner
         android:id="@+id/menuSpinner"

@@ -50,17 +50,20 @@ public class ChangePasswordActivity extends Activity
 					if(newPasswordEdit.getText().toString().
 							equals(reIntputNewPasswordEdit.getText().toString()))
 					{
-						myToast.msgToast("密碼變更完成");
+						myToast.msgToast(ChangePasswordActivity.this.getString
+								(R.string.change_password_complete));
 						finish();
 					}
 					else
 					{
-						myToast.msgToast("兩次新密碼不一致");
+						myToast.msgToast(ChangePasswordActivity.this.getString
+								(R.string.new_and_confirm_password_are_different));
 					}
 				}
 				else
 				{
-					myToast.msgToast("舊密碼錯誤");
+					myToast.msgToast(ChangePasswordActivity.this.getString
+							(R.string.old_password_not_match));
 				}
 				
 			}

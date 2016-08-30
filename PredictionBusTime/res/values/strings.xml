@@ -1,68 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">iBus智慧公車</string>
+    <string name="app_name">iBus smart bus</string>
+    <string name="app_name_zh_tw">iBus智慧公車</string>
     <string name="hello_world">Hello world!</string>
     
-    <string name="determine">確定</string>
-    <string name="reservation">預約</string>
-    <string name="sign_in">登入</string>
-    <string name="send">送出</string>
-    <string name="return_activity">返回</string>
-    <string name="registered">註冊</string>
-    <string name="previous">上一頁</string>
-    <string name="next_page">下一頁</string>
+    <string name="change_password_complete">change password complete</string>
+    <string name="change_password_complete_zh_tw">密碼變更完成</string>
     
-    <string name="input_route_ID">請點選下拉式選單\n選擇要查找的路線ID</string>
-    <string name="search_result_title">你查詢的路線是</string>
-    <string name="bus_state">公車狀態</string>
-    <string name="bus_arrivals_time">到達時間</string>
-    <string name="station_name">站名</string>
-    <string name="uuid">UUID</string>
-    <string name="password">密碼</string>
-    <string name="phone_number">電話號碼</string>
-    <string name="reInputPassword">請輸入舊密碼</string>
-    <string name="inputNewPassword">輸入要更改的新密碼</string>
-    <string name="reInputNewPassword">再次輸入新密碼</string>
-     
-    <string name="inputRegisterData">請輸入註冊資料</string>
-    <string name="dataCanNotNull">資料不能為空</string>
-    <string name="registeredSuccess">註冊成功</string>
+    <string name="new_and_confirm_password_are_different">
+        	Your new and confirm password are different.</string>
+    <string name="new_and_confirm_password_are_different_zh_tw">兩次新密碼不一致</string>
     
+    <string name="old_password_not_match">
+        	The old passwords you entered do not match.</string>
+    <string name="old_password_not_match_zh_tw">舊密碼錯誤</string>
    
-    <string name="explanation">操作說明</string>
+    <string name="system_error_plz_contact_us">
+        	System error, please contact us.</string>
+    <string name="system_error_plz_contact_us_zh_tw">系統錯誤，請聯絡我們</string>
+    
+    <string name="refresh_screen_plz_wait">
+        	Refresh screen, please wait.</string>
+    <string name="refresh_screen_plz_wait_zh_tw">更新畫面中，請稍後</string>
+    
+    <string name="determine">determine</string>
+    <string name="determine_zh_tw">確定</string>
+    
+    <string name="reservation">reservation</string>
+    <string name="reservation_zh_tw">預約</string>
+    
+    <string name="inquire_route">inquire route</string>
+    <string name="inquire_route_zh_tw">查詢路線</string>
+    
+    <string name="log_in">log in</string>
+    <string name="log_in_zh_tw">登入</string>
+    
+    <string name="send">send</string>
+    <string name="send_zh_tw">送出</string>
+    
+    <string name="return_activity">return</string>
+    <string name="return_activity_zh_tw">返回</string>
+    
+    <string name="registered">registered</string>
+    <string name="registered_zh_tw">註冊</string>
+    
+    <string name="reserve">reserve</string>
+    <string name="reserve_zh_tw">開始預約</string>
+    
+    <string name="cancel_reservation">Cancel reservation</string>
+    <string name="cancel_reservation_zh_tw">取消之前所做的預約設定</string>
+    
+    <string name="open_reserve_plz_click_stop_want_to_get_on">
+        	Open reserve, please click stop you want to get on
+        	(click colored area)</string>
+    <string name="open_reserve_plz_click_stop_want_to_get_on_zh_tw">
+        	啟動預約功能,請您點擊要上車的起始站(直接點擊有顏色的地方即可)</string>
+    
+    <string name="bus_direction_error">Error,bus direction of travel error</string>
+    <string name="bus_direction_error_zh_tw">錯誤，公車方向有誤</string>
+    
+    <string name="error">error</string>
+    <string name="error_zh_tw">錯誤</string>
+    
+    <string name="url_error">URL error</string>
+    <string name="url_error_zh_tw">URL錯誤</string>
+    
+    <string name="urlencoder_error">URLEncoder error</string>
+    <string name="urlencoder_error_zh_tw">URLEncoder錯誤</string>
+    
+    <string name="get_data_fail_plz_wait">Get data fail, please wait.</string>
+    <string name="get_data_fail_plz_wait_zh_tw">資料取得失敗，請稍後</string>
+    
+    <string name="data_update_fail">Data update fail.</string>
+    <string name="data_update_fail_zh_tw">資料更新失敗</string>
+    
+    <string name="want_reserve_need_log_in">Want reserve need log in.</string>
+    <string name="want_reserve_need_log_in_zh_tw">要使用預約功能請先登入</string>
+    
+    <string name="cancel_reservation_finish_can_start_new_reservation">
+        	Cancel reservation finish, can start new reservation.</string>
+    <string name="cancel_reservation_finish_can_start_new_reservation_zh_tw">
+        	前一次預約已被取消，開始進行新預約</string>
+    
+    <string name="select_first_stop_already_need_select_second">
+        	Select stop you want to get on already, now select stop
+        	you want to get off, if you want to cancel reservation click stop you
+        	want to get on again.</string>
+    <string name="select_first_stop_already_need_select_second_zh_tw">
+        	已選擇上車站，請選擇下車站，若要取消請再點擊一次上車站</string>
+        	
+    <string name="if_want_to_re_reserve_click_cancel_reserve_button">
+        	If you want to re-reserve, please click "cancel reserve" button first.</string>
+    <string name="if_want_to_re-reserve_click_cancel_reserve_button_zh_tw">
+        	若要重新預約，請先按下取消預約</string>
+    
+    <string name="plz_click_reserve_button">
+        	Please click "reserve" button.</string>
+    <string name="plz_click_reserve_button_zh_tw">
+        	請開啟預約按鈕</string>
+        	
+    <string name="Want_to_reserve_need_log_in">
+        	You want to reserve need log in first.</string>
+    <string name="Want_to_reserve_need_log_in_zh_tw">
+        	要使用預約功能請先登入</string>
+        	
+    <string name="plz_select_stop_after_stop_get_on">
+        	Please select stop where after you want to get on.</string>
+    <string name="plz_select_stop_after_stop_get_on_zh_tw">
+        	請選擇上車站後的站</string>
+        	
+    <string name="cancel_reserve">
+        	Cancel reserve.</string>
+    <string name="cancel_reserve_zh_tw">
+        	取消預約</string>
+    
+    <string name="reservation_request_already_send">
+        	Reservation request already send.</string>
+    <string name="reservation_request_already_send_zh_tw">
+        	預約請求已發出</string>
+    
+    <string name="to">to</string>
+    <string name="to_zh_tw">往</string>
+    
+    <string name="previous">previous</string>
+    <string name="previous_zh_tw">上一頁</string>
+    
+    <string name="next_page">next</string>
+    <string name="next_page_zh_tw">下一頁</string>
+    
+    <string name="input_route_ID">please click dropdown\n
+        	select route ID which you want to inquire</string>
+    <string name="input_route_ID_zh_tw">請點選下拉式選單\n選擇要查找的路線ID</string>
+    
+    <string name="search_result_title">route</string>
+    <string name="search_result_title_zh_tw">路線 </string>
+    
+    <string name="bus_state">Bus state</string>
+    <string name="bus_state_zh_tw">公車狀態</string>
+    
+    <string name="bus_arrivals_time">Arrival time</string>
+    <string name="bus_arrivals_time_zh_tw">到達時間</string>
+    
+    <string name="station_name">stop</string>
+    <string name="station_name_zh_tw">站名</string>
+    
+    <string name="uuid">UUID</string>
+    
+    <string name="password">password</string>
+    <string name="password_zh_tw">密碼</string>
+    
+    <string name="phone_number">phone number</string>
+    <string name="phone_number_zh_tw">電話號碼</string>
+    
+    <string name="reInputPassword">Old password</string>
+    <string name="reInputPassword_zh_tw">請輸入舊密碼</string>
+    
+    <string name="inputNewPassword">New password</string>
+    <string name="inputNewPassword_zh_tw">輸入要更改的新密碼</string>
+    
+    <string name="reInputNewPassword">Confirm new password</string>
+    <string name="reInputNewPassword_zh_tw">再次輸入新密碼</string>
+     
+    <string name="inputRegisterData">please input register data</string>
+    <string name="inputRegisterData_zh_tw">請輸入註冊資料</string>
+    
+    <string name="dataCanNotNull">Sorry,need input data</string>
+    <string name="dataCanNotNull_zh_tw">資料不能為空</string>
+    
+    <string name="registeredSuccess">registered success</string>
+    <string name="registeredSuccess_zh_tw">註冊成功</string>
+    
+   	<string name="explanation">explanation</string>
+    <string name="explanation_zh_tw">操作說明</string>
+    
     <string-array name="explanationContent1">
+        <item>How to reserve</item>
+        <item>1.If you want to reserve, you have to click the "reserve" button, and then 
+            log in to your account for us to check your identity.</item>
+        <item>2.To complete your reservation, fisrt you need to click the stop you 
+            want to get on, then click the stop you want to get off.</item>
+        <item>3.Warning!! If you has failed to keep your reservation, we will deduct 
+            money on your card or ban your account number according to the times you 
+            break this rule.</item>
+    </string-array>
+    <string-array name="explanationContent1_zh_tw">
         <item>預約功能</item>
         <item>1.若是想使用預約功能，除了開啟預約按鈕外，記得也要登入帳號，讓我們確定您的身分</item>
         <item>2.請藉由點擊站名來做預約公車動作，先點擊上車站再點擊下車站，即可完成預約</item>
         <item>3.若是預約公車後太多次沒到，我們將會藉由您的帳號對您發出懲罰，請勿隨便預約</item>
     </string-array>    
+    
     <string-array name="explanationContent2">
+        <item>Cancel/Change reservation</item>
+        <item>1.The "cancel reserve" button will only appear after you 
+            finish making your reservation.</item>
+        <item>2.If you want to cancel your reservation, 
+            please cilck the "cancel reserve" button and comfirm your cancellation.</item>
+        <item>3.if you want to change your reservation,
+             you can make your next reservation after your cancellation.</item>
+    </string-array>
+    <string-array name="explanationContent2_zh_tw">
         <item>取消/更改預約</item>
         <item>1.取消預約的按鈕會在預約後才會出現</item>
         <item>2.按下取消預約按鈕並確定，我們便會將前一次的預約請求刪除</item>
         <item>3.要更改前一次的預約，請刪除後重新點選啟動預約的按鈕</item>
     </string-array>
+    
     <string-array name="explanationContent3">
+        <item>About color</item>
+        <item>1.This app includes four colors which are red, 
+            orange, yellow and green to represents how long the bus arrival 
+            time you need to wait.</item>
+        <item>2.Red color represents the bus is still have one more stop to arrive;\n
+				Orange color represents the bus is still have two more stops to arrive;\n
+				Yellow color represents the bus is still have three more stops to arrive;\n 
+				Green color represents the bus is still have more than four stops to arrive.</item>
+    </string-array>
+    <string-array name="explanationContent3_zh_tw">
         <item>關於顏色</item>
-        <item>1.顏色代表著公車離這個站牌還有多遠</item>
-        <item>2.依照彩虹顏色，我們顏色有紅橙黃綠四色，每色代表不同的時間意義</item>
-        <item>3.紅代表公車差一站就到、橙兩站，後面類推，綠是四站以上才會到，您還可以悠閒地做別的事情</item>
+        <item>1.在這個APP之中，你會看到紅橙黃綠四色，顏色代表著公車離這個站牌還有多遠</item>
+        <item>2.紅代表公車差一站就到、橙兩站，後面類推，綠是四站以上才會到，您還可以悠閒地做別的事情</item>
     </string-array>
     
     <string-array name="can_run_route">
-        <item>33</item>
+        <item>OO</item>
+    </string-array>
+    <string-array name="can_run_route_zh_tw">
         <item>160</item>
     </string-array>
-    
+
     <string-array name="menu">
+        <item>menu</item>
+        <item>log out</item>
+        <item>change password</item>
+        <item>delete account</item>
+    </string-array>
+    <string-array name="menu_zh_tw">
         <item>選單</item>
         <item>登出</item>
         <item>更改密碼</item>
         <item>刪除帳號</item>
     </string-array>
     
-    <string-array name="id_33_route">
+    <string-array name="id_33_route_zh_tw">
         <item>文修停車場</item>
         <item>西苑高中</item>
         <item>僑光科技大學</item>
@@ -135,7 +316,19 @@
         <item>烏日國中(新興路)</item>
         <item>高鐵臺中站</item>
     </string-array>
-    <string-array name="id_160_route">
+    
+    <string-array name="id_OO_route">
+        <item>O-1</item>
+        <item>O-2</item>
+        <item>O-3</item>
+        <item>O-4</item>
+        <item>O-5</item>
+        <item>O-6</item>
+        <item>O-7</item>
+        <item>O-8</item>
+        <item>O-9</item>
+    </string-array>
+    <string-array name="id_160_route_zh_tw">
         <item>高鐵臺中站</item>
         <item>環中向上路口</item>
         <item>向上永春東七路口</item>

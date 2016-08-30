@@ -4,6 +4,7 @@ import chara.User;
 
 import com.example.predictionbustime.ChangePasswordActivity;
 import com.example.predictionbustime.MainActivity;
+import com.example.predictionbustime.R;
 import com.example.predictionbustime.SearchRouteByIdLayout;
 import com.example.predictionbustime.SignInActivity;
 
@@ -21,6 +22,11 @@ import android.widget.Toast;
 
 public class MenuListener implements AdapterView.OnItemSelectedListener,OnClickListener
 {
+	private static final int MENU = 0;
+	private static final int LOG_OUT = 1;
+	private static final int CHANGE_PASSWORD = 2;
+	private static final int DELETE_ACCOUNT = 3;
+	
 	Button signButton;
 	Spinner menuSpinner;
 	User user = User.getUniqueUser();
@@ -41,24 +47,21 @@ public class MenuListener implements AdapterView.OnItemSelectedListener,OnClickL
 			long id)
 	{
 		// TODO Auto-generated method stub
-//		switch(list[position])
-		switch(parent.getSelectedItem().toString())
+		
+		switch(position)
 		{
-			case "登出":
-				System.out.println("登出");
+			case LOG_OUT:
 				signButton.setVisibility(View.VISIBLE);
 				menuSpinner.setVisibility(View.GONE);
 				menuSpinner.setSelection(0);
 				user.setUUID("");
 				break;
 
-			case "更改密碼":
-				System.out.println("更改密碼");
+			case CHANGE_PASSWORD:
 				changePassword();
 				break;
 
-			case "刪除帳號":
-				System.out.println("刪除帳號");
+			case DELETE_ACCOUNT:
 				deleteAccount();
 				break;
 				

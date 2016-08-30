@@ -127,7 +127,9 @@ public class PrintSearchByIdResult extends Activity
 		Bundle bundle = intent.getExtras();
 
 		routeNumber = bundle.getString("Route");
-		printSearchTitle.setText("" + routeNumber + "號線");
+		printSearchTitle.setText(
+				PrintSearchByIdResult.this.getString
+				(R.string.search_result_title)+ routeNumber);
 		
 		list = getResources().getStringArray(R.array.menu);
 		listAdapter2 = new ArrayAdapter(this,
@@ -139,24 +141,32 @@ public class PrintSearchByIdResult extends Activity
 		switch (routeNumber)
 		{
 			case "33":
-				mTestArray = getResources().getStringArray(R.array.id_33_route);
+				mTestArray = getResources().getStringArray(R.array.id_33_route_zh_tw);
 				break;
 			case "160":
-				mTestArray = getResources().getStringArray(R.array.id_160_route);
+				mTestArray = getResources().getStringArray(R.array.id_160_route_zh_tw);
+				break;
+			case "OO":
+				mTestArray = getResources().getStringArray(R.array.id_OO_route);
 				break;
 			default:
-				myToast.msgToast("系統錯誤，請聯絡工程師");
+				myToast.msgToast(PrintSearchByIdResult.this.getString
+						(R.string.system_error_plz_contact_us));
 				break;
 		}
 
-		startEndStationArray = new Integer[mTestArray.length];
+		if(mTestArray != null)
+		{
+			startEndStationArray = new Integer[mTestArray.length];
+		}
 		
 		for(int i=0 ; i<startEndStationArray.length ; i++)
 		{
 			startEndStationArray[i] = BusDetail.NONE_RESERVATION;
 		}
 		
-		myToast.msgToast("更新畫面中，請稍後");
+		myToast.msgToast(PrintSearchByIdResult.this.getString
+				(R.string.refresh_screen_plz_wait));
 		
 		setListViewPrint();
 		
@@ -191,7 +201,10 @@ public class PrintSearchByIdResult extends Activity
 				// TODO Auto-generated method stub
 				
 				listViewState = SELECT_START_STATION;
-				printSearchTitle.setText("" + routeNumber + "號線");
+				//printSearchTitle.setText("" + routeNumber + "號線");
+				printSearchTitle.setText(
+						PrintSearchByIdResult.this.getString
+						(R.string.search_result_title)+ routeNumber);
 				switch (busDirection)
 				{
 				case BUS_FORWARD:
@@ -227,9 +240,11 @@ public class PrintSearchByIdResult extends Activity
 				{
 					startReservation = false;
 					haveReservation = false;
-					reservationButton.setText("開始預約");
-
-					myToast.msgToast("取消之前所做的預約設定");
+					reservationButton.setText(PrintSearchByIdResult.this.getString
+							(R.string.reserve));
+					
+					myToast.msgToast(PrintSearchByIdResult.this.getString
+							(R.string.cancel_reservation));
 				
 					for(int i=0 ; i<startEndStationArray.length ; i++)
 					{
@@ -241,7 +256,9 @@ public class PrintSearchByIdResult extends Activity
 				{
 					startReservation = true;
 					reservationButton.setEnabled(false);
-					myToast.msgToast("啟動預約功能,請您點擊要上車的起始站(直接點擊顯示時間的地方即可)");
+
+					myToast.msgToast(PrintSearchByIdResult.this.getString
+							(R.string.open_reserve_plz_click_stop_want_to_get_on));
 				}
 			}
 		});
@@ -329,9 +346,11 @@ public class PrintSearchByIdResult extends Activity
 		}
 		else
 		{
-			Log.e("錯誤", "公車方向不定");
+			Log.e(PrintSearchByIdResult.this.getString(R.string.error),
+					PrintSearchByIdResult.this.getString(R.string.bus_direction_error));
 			System.exit(1);
-			myToast.msgToast("錯誤，公車方向有誤");
+			myToast.msgToast(PrintSearchByIdResult.this.getString
+					(R.string.bus_direction_error));
 		}
 		
 		try
@@ -344,7 +363,8 @@ public class PrintSearchByIdResult extends Activity
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			myToast.msgToast("URL錯誤");
+			myToast.msgToast(PrintSearchByIdResult.this.getString
+					(R.string.url_error));
 		}
 		
 		sendGetThread = new SendGetThread(url, runHandle);
@@ -359,7 +379,8 @@ public class PrintSearchByIdResult extends Activity
 		}
 		else
 		{
-			myToast.msgToast("資料取得失敗，請稍後");
+			myToast.msgToast(PrintSearchByIdResult.this.getString
+					(R.string.get_data_fail_plz_wait));
 		}
 			
 		for (int i = 0; i < mTestArray.length; i++)
@@ -371,7 +392,8 @@ public class PrintSearchByIdResult extends Activity
 					getBusApartHowManyStation()));
 		}
 
-		switchButton.setText("往" + mTestArray[0]);
+		switchButton.setText(PrintSearchByIdResult.this.getString
+				(R.string.to) + mTestArray[0]);
 
 		listAdapter = new MyAdapter(PrintSearchByIdResult.this, bus_list);
 		listview.setAdapter(listAdapter);
@@ -394,20 +416,25 @@ public class PrintSearchByIdResult extends Activity
 						{
 							if(user.getUUID().equals(""))
 							{
-								myToast.msgToast("要使用預約功能請先登入");
+								myToast.msgToast(PrintSearchByIdResult.this.getString
+										(R.string.want_reserve_need_log_in));
 							}
 							else
 							{
 								if(endStationID != -1)
 								{
-									myToast.msgToast("前一次預約已被取消，開始進行新預約");
+									myToast.msgToast(PrintSearchByIdResult.this.getString
+											(R.string.cancel_reservation_finish_can_start_new_reservation));
+									
 									endStationID = -1;
 
 								}
 								
 								startStationID = position;
 								listViewState = SELECT_END_STATION;
-								myToast.msgToast("已選擇上車站，請選擇下車站，若要取消請再點擊一次上車站");
+								myToast.msgToast(PrintSearchByIdResult.this.getString
+										(R.string.select_first_stop_already_need_select_second));
+								
 								updateReservation(startStationID,BusDetail.RESERVATION_START_STATION);
 								
 							}
@@ -416,11 +443,14 @@ public class PrintSearchByIdResult extends Activity
 						{
 							if(haveReservation == true)
 							{
-								myToast.msgToast("若要重新預約，請先按下取消預約");
+								myToast.msgToast(PrintSearchByIdResult.this.getString
+									(R.string.if_want_to_re_reserve_click_cancel_reserve_button));
+							
 							}
 							else
 							{
-								myToast.msgToast("請開啟預約按鈕");
+								myToast.msgToast(PrintSearchByIdResult.this.getString
+										(R.string.plz_click_reserve_button));
 							}
 						}
 						break;
@@ -429,30 +459,44 @@ public class PrintSearchByIdResult extends Activity
 						{
 							if(user.getUUID().equals(""))
 							{
-								myToast.msgToast("要使用預約功能請先登入");
+								myToast.msgToast(PrintSearchByIdResult.this.getString
+										(R.string.Want_to_reserve_need_log_in));
+								
 								listViewState = SELECT_START_STATION;
-								printSearchTitle.setText("" + routeNumber + "號線");
+								printSearchTitle.setText(
+										PrintSearchByIdResult.this.getString
+										(R.string.search_result_title)+ routeNumber);
 							}
 							else
 							{
 								if(startStationID > position)
 								{
-									myToast.msgToast("請選擇上車站後的站");
+									myToast.msgToast(PrintSearchByIdResult.this.getString
+											(R.string.plz_select_stop_after_stop_get_on));
+									
 								}
 								else if(startStationID == position)
 								{
-									myToast.msgToast("取消預約程序");
+									myToast.msgToast(PrintSearchByIdResult.this.getString
+											(R.string.cancel_reserve));
+									
 									listViewState = SELECT_START_STATION;
 									updateReservation(startStationID,BusDetail.NONE_RESERVATION);
-									printSearchTitle.setText("" + routeNumber + "號線");
+									printSearchTitle.setText(
+											PrintSearchByIdResult.this.getString
+											(R.string.search_result_title)+ routeNumber);
 									reservationButton.setEnabled(true);
 									startReservation = false;
 								}
 								else
 								{
-									myToast.msgToast("預約請求已發出");
+									myToast.msgToast(PrintSearchByIdResult.this.getString
+										(R.string.reservation_request_already_send));
+								
 									listViewState = SELECT_START_STATION;
-									printSearchTitle.setText("" + routeNumber + "號線");
+									printSearchTitle.setText(
+											PrintSearchByIdResult.this.getString
+											(R.string.search_result_title)+ routeNumber);
 									endStationID = position;
 									
 									updateReservation(endStationID,BusDetail.RESERVATION_END_STATION);
@@ -461,7 +505,9 @@ public class PrintSearchByIdResult extends Activity
 									startReservation = false;
 									
 									reservationButton.setEnabled(true);
-									reservationButton.setText("取消預約");
+									
+									reservationButton.setText(PrintSearchByIdResult.this.getString
+											(R.string.cancel_reserve));
 									
 									
 									reservation();
@@ -470,12 +516,14 @@ public class PrintSearchByIdResult extends Activity
 						}
 						else
 						{
-							myToast.msgToast("請開啟預約按鈕");
+							myToast.msgToast(PrintSearchByIdResult.this.getString
+									(R.string.plz_click_reserve_button));
 							listViewState = SELECT_START_STATION;
 						}
 						break;
 					default:
-						myToast.msgToast("系統錯誤，請聯絡工程師");			
+						myToast.msgToast(PrintSearchByIdResult.this.getString
+								(R.string.system_error_plz_contact_us));
 						break;
 				}
 			}
@@ -495,7 +543,8 @@ public class PrintSearchByIdResult extends Activity
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			myToast.msgToast("URL錯誤");
+			myToast.msgToast(PrintSearchByIdResult.this.getString
+					(R.string.url_error));
 		}
 		
 		StringBuilder uriparameters = new StringBuilder();
@@ -510,7 +559,8 @@ public class PrintSearchByIdResult extends Activity
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			myToast.msgToast("URLEncoder錯誤");
+			myToast.msgToast(PrintSearchByIdResult.this.getString
+					(R.string.urlencoder_error));
 		}
 		
 		
@@ -626,14 +676,16 @@ public class PrintSearchByIdResult extends Activity
 				else
 				{
 					Log.e("資料更新失敗", "PrintSearchByIdResult字串無法取得");
-					myToast.msgToast("資料更新失敗");	
+					myToast.msgToast(PrintSearchByIdResult.this.getString
+							(R.string.data_update_fail));
 //					System.exit(1);
 				}
 			}
 			else
 			{
 				Log.e(station+" jsonObject取得失敗", "PrintSearchByIdResult");
-				myToast.msgToast("資料更新失敗");	
+				myToast.msgToast(PrintSearchByIdResult.this.getString
+						(R.string.data_update_fail));
 //				System.exit(1);
 			}
 			

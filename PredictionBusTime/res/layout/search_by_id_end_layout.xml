@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="@string/sign_in" />
+                android:text="@string/log_in" />
 
             <Spinner
                 android:id="@+id/menuSpinner"
@@ -82,7 +82,7 @@
                 android:id="@+id/reservationButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="開始預約"
+                android:text="@string/reserve"
                 android:textSize="15sp" />
 
             <Button
