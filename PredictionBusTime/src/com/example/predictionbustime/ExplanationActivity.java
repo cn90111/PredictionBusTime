@@ -6,20 +6,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ExplanationActivity extends Activity
 {
 	Button previousButton,nextPageButton;
 	Button returnButton;
 	
-	TextView titleTextView,ContentTextView1,ContentTextView2,ContentTextView3;
+	ListView ContentListView;
 	
 	int count = 0;
 	
-	String[][] explanation;
+	String[][] explanationContentArray;
+	String[] list;
 	
+	ArrayAdapter<String> listAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -30,12 +36,9 @@ public class ExplanationActivity extends Activity
 		previousButton = (Button) findViewById(R.id.previousButton);
 		nextPageButton = (Button) findViewById(R.id.nextPageButton);
 
-		titleTextView = (TextView) findViewById(R.id.textView1);
-		ContentTextView1 = (TextView) findViewById(R.id.textView2);
-		ContentTextView2 = (TextView) findViewById(R.id.textView3);
-		ContentTextView3 = (TextView) findViewById(R.id.textView4);
+		ContentListView = (ListView) findViewById(R.id.listView1);
 		
-		explanation = new String[][]
+		explanationContentArray  = new String[][]
 		{
 			getResources().getStringArray(R.array.explanationContent1),
 			getResources().getStringArray(R.array.explanationContent2),
@@ -90,16 +93,15 @@ public class ExplanationActivity extends Activity
 	
 	public void refresh()
 	{
-		titleTextView.setText(explanation[count][0]);
-		ContentTextView1.setText(explanation[count][1]);
-		ContentTextView2.setText(explanation[count][2]);
-		ContentTextView3.setText(explanation[count][3]);
+		list = explanationContentArray[count];
+		listAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,list);
+		ContentListView.setAdapter(listAdapter);
 		
 		if(count<=0)
 		{
 			previousButton.setEnabled(false);
 		}
-		else if(count >= explanation.length-1)
+		else if(count >= list.length-1)
 		{
 			nextPageButton.setEnabled(false);
 		}
