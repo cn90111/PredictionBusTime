@@ -4,6 +4,7 @@ import chara.User;
 
 import com.example.predictionbustime.ChangePasswordActivity;
 import com.example.predictionbustime.MainActivity;
+import com.example.predictionbustime.PrintSearchByIdResult;
 import com.example.predictionbustime.R;
 import com.example.predictionbustime.SearchRouteByIdLayout;
 import com.example.predictionbustime.SignInActivity;
@@ -66,8 +67,10 @@ public class MenuListener implements AdapterView.OnItemSelectedListener,OnClickL
 				break;
 				
 			default:
-				System.out.println("程式錯誤");
-				Log.e("error","MenuSpinnerListener,程式錯誤");
+				System.out.println(nowActivity.getString(R.string.search_result_title));
+				
+				Log.e("error","MenuSpinnerListener,"+
+									nowActivity.getString(R.string.search_result_title));
 				break;
 		}
 	}

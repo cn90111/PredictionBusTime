@@ -20,6 +20,9 @@
         	System error, please contact us.</string>
     <string name="system_error_plz_contact_us_zh_tw">系統錯誤，請聯絡我們</string>
     
+    <string name="program_error">Program error</string>
+    <string name="program_error_zh_tw">程式錯誤</string>
+    
     <string name="refresh_screen_plz_wait">
         	Refresh screen, please wait.</string>
     <string name="refresh_screen_plz_wait_zh_tw">更新畫面中，請稍後</string>
@@ -47,6 +50,24 @@
     
     <string name="reserve">reserve</string>
     <string name="reserve_zh_tw">開始預約</string>
+    
+    <string name="approach">approach</string>
+    <string name="approach_zh_tw">即將到站</string>
+    
+    <string name="minute">min</string>
+    <string name="minute_zh_tw">分鐘</string>
+    
+    <string name="early">early</string>
+    <string name="early_zh_tw">比預估早</string>
+    
+    <string name="normal">normal</string>
+    <string name="normal_zh_tw">預估正確</string>
+    
+    <string name="late">late</string>
+    <string name="late_zh_tw">比預估晚</string>
+    
+    <string name="no_bus">late</string>
+    <string name="no_bus_zh_tw">末班車已駛離</string>
     
     <string name="cancel_reservation">Cancel reservation</string>
     <string name="cancel_reservation_zh_tw">取消之前所做的預約設定</string>
@@ -92,7 +113,7 @@
         	
     <string name="if_want_to_re_reserve_click_cancel_reserve_button">
         	If you want to re-reserve, please click "cancel reserve" button first.</string>
-    <string name="if_want_to_re-reserve_click_cancel_reserve_button_zh_tw">
+    <string name="if_want_to_re_reserve_click_cancel_reserve_button_zh_tw">
         	若要重新預約，請先按下取消預約</string>
     
     <string name="plz_click_reserve_button">
@@ -111,7 +132,7 @@
         	請選擇上車站後的站</string>
         	
     <string name="cancel_reserve">
-        	Cancel reserve.</string>
+        	cancel reserve</string>
     <string name="cancel_reserve_zh_tw">
         	取消預約</string>
     
@@ -173,6 +194,12 @@
     
    	<string name="explanation">explanation</string>
     <string name="explanation_zh_tw">操作說明</string>
+    
+    <string name="origin">ori.</string>
+    <string name="origin_zh_tw">起</string>
+    
+    <string name="destination">dest.</string>
+    <string name="destination_zh_tw">訖</string>
     
     <string-array name="explanationContent1">
         <item>How to reserve</item>

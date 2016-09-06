@@ -3,6 +3,7 @@ package method;
 import java.util.List;
 
 import com.example.predictionbustime.BusDetail;
+import com.example.predictionbustime.PrintSearchByIdResult;
 import com.example.predictionbustime.R;
 
 import android.content.Context;
@@ -95,7 +96,7 @@ public class MyAdapter extends BaseAdapter
         
         if(busDetail.getMinute() > -10 && busDetail.getMinute() < 0)
         {
-        	holder.txtMinute.setText("即將到站");
+        	holder.txtMinute.setText(R.string.approach);
         }
         else if(busDetail.getMinute() < -10 )
         {
@@ -103,7 +104,8 @@ public class MyAdapter extends BaseAdapter
         }
         else
         {
-        	holder.txtMinute.setText(new Integer(busDetail.getMinute()).toString() + "分鐘");
+        	holder.txtMinute.setText(new Integer(busDetail.getMinute()).toString() + 
+        									"min");
         }
         
         holder.txtMinute.setTextColor(0xFFFFFFFF);
@@ -111,19 +113,19 @@ public class MyAdapter extends BaseAdapter
         switch(busDetail.getGoToStationType())
         {
         	case BusDetail.EARLY:
-        		holder.txtType.setText("比預估早");
+        		holder.txtType.setText(R.string.early);
         		break;
         	case BusDetail.NORMAL:
-        		holder.txtType.setText("預估正確");
+        		holder.txtType.setText(R.string.normal);
         		break;
         	case BusDetail.LATE:
-        		holder.txtType.setText("比預估晚");
+        		holder.txtType.setText(R.string.late);
         		break;
         	case BusDetail.NO_BUS:
-        		holder.txtType.setText("末班車已駛離");
+        		holder.txtType.setText(R.string.no_bus);
         		break;
         	default:
-        		holder.txtType.setText("錯誤");
+        		holder.txtType.setText(R.string.error);
 	    		break;
         		
         }
@@ -135,11 +137,11 @@ public class MyAdapter extends BaseAdapter
         		holder.txtStartEndStation.setText("　");
         		break;
         	case BusDetail.RESERVATION_START_STATION:
-        		holder.txtStartEndStation.setText("起");
+        		holder.txtStartEndStation.setText(R.string.origin);
         		holder.txtStartEndStation.setTextColor(0xFF0066FF);
         		break;
         	case BusDetail.RESERVATION_END_STATION:
-        		holder.txtStartEndStation.setText("訖");
+        		holder.txtStartEndStation.setText(R.string.destination);
         		holder.txtStartEndStation.setTextColor(0xFF0066FF);
         		break;
         }

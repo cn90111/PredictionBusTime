@@ -356,7 +356,7 @@ public class PrintSearchByIdResult extends Activity
 		try
 		{
 			url = new URL("http://ibus.team-bob.org:3000/v2/busArrival?"
-					+ "route=" + route
+					+ "route=" + 160
 					+ "&is_reverse=" + is_reverse);
 		}
 		catch (MalformedURLException e)
@@ -393,7 +393,7 @@ public class PrintSearchByIdResult extends Activity
 		}
 
 		switchButton.setText(PrintSearchByIdResult.this.getString
-				(R.string.to) + mTestArray[0]);
+				(R.string.to) + " " + mTestArray[0]);
 
 		listAdapter = new MyAdapter(PrintSearchByIdResult.this, bus_list);
 		listview.setAdapter(listAdapter);
@@ -761,7 +761,7 @@ public class PrintSearchByIdResult extends Activity
 		}
 		else
 		{
-			state = BusDetail.LATE;
+			state = BusDetail.EARLY;
 		}
 		
 		return state;
